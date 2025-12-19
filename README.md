@@ -21,7 +21,7 @@ Add the following dependency to your `pom.xml`:
 <dependency>
     <groupId>com.tapsilat</groupId>
     <artifactId>tapsilat-java-client</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>2025.12.19.1</version>
 </dependency>
 ```
 
@@ -30,7 +30,7 @@ Add the following dependency to your `pom.xml`:
 Add the dependency to your `build.gradle`:
 
 ```gradle
-implementation 'com.tapsilat:tapsilat-java-client:1.0.0-SNAPSHOT'
+implementation 'com.tapsilat:tapsilat-java-client:2025.12.19.1'
 ```
 
 ---
