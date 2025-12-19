@@ -30,8 +30,11 @@ jobs:
           gpg-private-key: ${{ secrets.OSSRH_GPG_PRIVATE_KEY }}
           gpg-passphrase: MAVEN_GPG_PASSPHRASE
 
+      - name: Run Tests
+        run: mvn -B test
+
       - name: Publish package
-        run: mvn -B -DskipTests deploy
+        run: mvn -B deploy -DskipTests
 
       - name: Extract version from tag
         id: get_version

@@ -2,7 +2,7 @@ SHELL := /bin/zsh
 
 .PHONY: help build test clean format check
 
-MVN ?= mvn
+MVN := $(shell command -v mvn 2> /dev/null || echo "./mvnw")
 
 help:
 	@echo "Available targets:"
