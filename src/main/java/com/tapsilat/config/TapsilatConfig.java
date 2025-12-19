@@ -1,4 +1,4 @@
-package com.tapsilat.order.config;
+package com.tapsilat.config;
 
 /**
  * Configuration class for Tapsilat API client.

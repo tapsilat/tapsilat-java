@@ -1,15 +1,15 @@
-package com.tapsilat.order;
+package com.tapsilat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tapsilat.order.builder.OrderRequestBuilder;
-import com.tapsilat.order.config.TapsilatConfig;
-import com.tapsilat.order.enums.Currency;
-import com.tapsilat.order.enums.Locale;
-import com.tapsilat.order.exception.TapsilatException;
-import com.tapsilat.order.model.Buyer;
-import com.tapsilat.order.model.Metadata;
-import com.tapsilat.order.model.OrderRequest;
-import com.tapsilat.order.model.OrderResponse;
+import com.tapsilat.builder.OrderRequestBuilder;
+import com.tapsilat.config.TapsilatConfig;
+import com.tapsilat.enums.Currency;
+import com.tapsilat.enums.Locale;
+import com.tapsilat.exception.TapsilatException;
+import com.tapsilat.model.common.Buyer;
+import com.tapsilat.model.common.Metadata;
+import com.tapsilat.model.order.OrderRequest;
+import com.tapsilat.model.order.OrderResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

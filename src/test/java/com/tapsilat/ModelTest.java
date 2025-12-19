@@ -1,6 +1,6 @@
-package com.tapsilat.order;
+package com.tapsilat;
 
-import com.tapsilat.order.model.*;
+import com.tapsilat.model.common.*; import com.tapsilat.model.order.*; import com.tapsilat.model.subscription.*;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

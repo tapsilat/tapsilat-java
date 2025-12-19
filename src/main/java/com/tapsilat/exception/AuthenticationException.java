@@ -1,4 +1,4 @@
-package com.tapsilat.order.exception;
+package com.tapsilat.exception;
 
 /**
  * Exception thrown when API authentication fails.

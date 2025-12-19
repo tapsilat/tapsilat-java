@@ -1,12 +1,12 @@
-package com.tapsilat.order;
+package com.tapsilat;
 
-import com.tapsilat.order.builder.OrderRequestBuilder;
-import com.tapsilat.order.config.TapsilatConfig;
-import com.tapsilat.order.enums.Currency;
-import com.tapsilat.order.enums.Locale;
-import com.tapsilat.order.exception.TapsilatException;
-import com.tapsilat.order.model.OrderRequest;
-import com.tapsilat.order.model.OrderResponse;
+import com.tapsilat.builder.OrderRequestBuilder;
+import com.tapsilat.config.TapsilatConfig;
+import com.tapsilat.enums.Currency;
+import com.tapsilat.enums.Locale;
+import com.tapsilat.exception.TapsilatException;
+import com.tapsilat.model.order.OrderRequest;
+import com.tapsilat.model.order.OrderResponse;
 
 import java.math.BigDecimal;
 

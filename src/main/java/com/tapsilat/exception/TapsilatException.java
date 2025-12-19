@@ -1,4 +1,4 @@
-package com.tapsilat.order.exception;
+package com.tapsilat.exception;
 
 /**
  * Custom exception for Tapsilat API errors.

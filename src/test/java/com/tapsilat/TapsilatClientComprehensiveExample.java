@@ -1,9 +1,9 @@
-package com.tapsilat.order;
+package com.tapsilat;
 
-import com.tapsilat.order.config.TapsilatConfig;
-import com.tapsilat.order.enums.Currency;
-import com.tapsilat.order.enums.Locale;
-import com.tapsilat.order.model.*;
+import com.tapsilat.config.TapsilatConfig;
+import com.tapsilat.enums.Currency;
+import com.tapsilat.enums.Locale;
+import com.tapsilat.model.common.*; import com.tapsilat.model.order.*; import com.tapsilat.model.subscription.*;
 
 import java.math.BigDecimal;
 import java.util.Arrays;

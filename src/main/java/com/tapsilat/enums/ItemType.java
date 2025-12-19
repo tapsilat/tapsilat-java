@@ -1,4 +1,4 @@
-package com.tapsilat.order.enums;
+package com.tapsilat.enums;
 
 /**
  * Supported item types for basket items in Tapsilat orders.

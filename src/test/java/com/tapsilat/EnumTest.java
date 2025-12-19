@@ -1,7 +1,7 @@
-package com.tapsilat.order;
+package com.tapsilat;
 
-import com.tapsilat.order.enums.BillingType;
-import com.tapsilat.order.enums.ItemType;
+import com.tapsilat.enums.BillingType;
+import com.tapsilat.enums.ItemType;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
