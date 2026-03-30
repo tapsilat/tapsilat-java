@@ -1,7 +1,8 @@
 package com.tapsilat.model.order;
+
 import com.tapsilat.model.common.*;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Objects;
 
@@ -9,6 +10,7 @@ import java.util.Objects;
  * Represents the response from Tapsilat order creation API.
  * Based on actual API response: {"order_id":"...","reference_id":"..."}
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class OrderResponse {
 
     @JsonProperty("order_id")

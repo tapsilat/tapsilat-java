@@ -86,6 +86,9 @@ public abstract class BaseService {
             case "DELETE":
                 request = new HttpDelete(url);
                 break;
+            case "PATCH":
+                request = new HttpPatch(url);
+                break;
             default:
                 throw new IllegalArgumentException("Unsupported method: " + method);
         }
@@ -99,8 +102,9 @@ public abstract class BaseService {
         }
 
         if (payload != null && request instanceof HttpEntityContainer) {
+            String json = objectMapper.writeValueAsString(payload);
             ((HttpEntityContainer) request).setEntity(
-                    new StringEntity(objectMapper.writeValueAsString(payload), ContentType.APPLICATION_JSON));
+                    new StringEntity(json, ContentType.APPLICATION_JSON));
         }
 
         return request;
@@ -116,6 +120,23 @@ public abstract class BaseService {
 
     private String resolveEndpoint(String endpoint) {
         String baseUrl = config.getBaseUrl();
+        // If endpoint already contains basic path prefix, don't re-append it
+        if (endpoint.startsWith("/api/v1")) {
+            // Remove /api/v1 from baseURL if it's already there to avoid duplication
+            String base = baseUrl;
+            if (base.endsWith("/api/v1")) {
+                base = base.substring(0, base.length() - 7);
+            } else if (base.endsWith("/api/v1/")) {
+                base = base.substring(0, base.length() - 8);
+            }
+            
+            if (base.endsWith("/") && endpoint.startsWith("/"))
+                return base + endpoint.substring(1);
+            if (!base.endsWith("/") && !endpoint.startsWith("/"))
+                return base + "/" + endpoint;
+            return base + endpoint;
+        }
+
         if (baseUrl.endsWith("/") && endpoint.startsWith("/"))
             return baseUrl + endpoint.substring(1);
         if (!baseUrl.endsWith("/") && !endpoint.startsWith("/"))

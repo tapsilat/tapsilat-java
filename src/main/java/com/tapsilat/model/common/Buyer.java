@@ -24,7 +24,7 @@ public class Buyer {
     @JsonProperty("phone")
     private String phone;
 
-    @JsonProperty("identityNumber")
+    @JsonProperty("identity_number")
     private String identityNumber;
 
     @JsonProperty("birth_date")

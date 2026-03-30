@@ -43,6 +43,9 @@ public class SubscriptionCreateRequest {
     @JsonProperty("user")
     private SubscriptionUser user;
 
+    @JsonProperty("price_option")
+    private SubscriptionPriceOption priceOption;
+
     public BigDecimal getAmount() {
         return amount;
     }
@@ -137,5 +140,13 @@ public class SubscriptionCreateRequest {
 
     public void setUser(SubscriptionUser user) {
         this.user = user;
+    }
+
+    public SubscriptionPriceOption getPriceOption() {
+        return priceOption;
+    }
+
+    public void setPriceOption(SubscriptionPriceOption priceOption) {
+        this.priceOption = priceOption;
     }
 }

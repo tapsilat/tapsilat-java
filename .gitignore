@@ -41,3 +41,9 @@ nb-configuration.xml
 
 # Plugin directory
 /.quarkus/cli/plugins/
+
+# Test results and verification scripts
+ExhaustiveVerify.java
+*-result.md
+*test-result*
+*.log

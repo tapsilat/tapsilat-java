@@ -34,10 +34,10 @@ public class OrderRequest {
     @JsonProperty("description")
     private String description;
 
-    @JsonProperty("callbackUrl")
+    @JsonProperty("callback_url")
     private String callbackUrl;
 
-    @JsonProperty("conversationId")
+    @JsonProperty("conversation_id")
     private String conversationId;
 
     @JsonProperty("metadata")
@@ -62,7 +62,7 @@ public class OrderRequest {
     private Boolean partialPayment;
 
     @JsonProperty("payment_methods")
-    private List<String> paymentMethods;
+    private Boolean paymentMethods;
 
     @JsonProperty("payment_options")
     private List<String> paymentOptions;
@@ -108,6 +108,9 @@ public class OrderRequest {
 
     @JsonProperty("submerchants")
     private List<Submerchant> submerchants;
+
+    @JsonProperty("consents")
+    private List<OrderConsent> consents;
 
     // Default constructor for Jackson deserialization
     public OrderRequest() {
@@ -263,21 +266,21 @@ public class OrderRequest {
     }
 
     /**
-     * Gets the payment methods list.
+     * Gets the payment methods flag.
      * 
-     * @return Unmodifiable view of payment methods list, or null if not set
+     * @return The payment methods flag, or null if not set
      */
-    public List<String> getPaymentMethods() {
-        return paymentMethods != null ? Collections.unmodifiableList(paymentMethods) : null;
+    public Boolean getPaymentMethods() {
+        return paymentMethods;
     }
 
     /**
-     * Sets the payment methods list with defensive copy.
+     * Sets the payment methods flag.
      * 
-     * @param paymentMethods The payment methods list (can be null)
+     * @param paymentMethods The payment methods flag (can be null)
      */
-    public void setPaymentMethods(List<String> paymentMethods) {
-        this.paymentMethods = paymentMethods != null ? new ArrayList<>(paymentMethods) : null;
+    public void setPaymentMethods(Boolean paymentMethods) {
+        this.paymentMethods = paymentMethods;
     }
 
     /**
@@ -408,6 +411,14 @@ public class OrderRequest {
 
     public void setSubmerchants(List<Submerchant> submerchants) {
         this.submerchants = submerchants;
+    }
+
+    public List<OrderConsent> getConsents() {
+        return consents;
+    }
+
+    public void setConsents(List<OrderConsent> consents) {
+        this.consents = consents;
     }
 
     @Override

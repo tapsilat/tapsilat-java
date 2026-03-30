@@ -28,7 +28,7 @@ public class OrderRequestBuilder {
     private Double taxAmount;
     private Boolean threeDForce;
     private Boolean partialPayment;
-    private List<String> paymentMethods = new ArrayList<>();
+    private Boolean paymentMethods;
     private List<String> paymentOptions = new ArrayList<>();
 
     /**
@@ -281,24 +281,13 @@ public class OrderRequestBuilder {
     }
 
     /**
-     * Add a payment method.
+     * Set the payment methods flag.
      * 
-     * @param paymentMethod The payment method to add
+     * @param paymentMethods The payment methods flag
      * @return This builder
      */
-    public OrderRequestBuilder paymentMethod(String paymentMethod) {
-        this.paymentMethods.add(paymentMethod);
-        return this;
-    }
-
-    /**
-     * Set the complete payment methods list.
-     * 
-     * @param paymentMethods The payment methods list
-     * @return This builder
-     */
-    public OrderRequestBuilder paymentMethods(List<String> paymentMethods) {
-        this.paymentMethods = new ArrayList<>(paymentMethods);
+    public OrderRequestBuilder paymentMethods(Boolean paymentMethods) {
+        this.paymentMethods = paymentMethods;
         return this;
     }
 
@@ -435,7 +424,7 @@ public class OrderRequestBuilder {
         orderRequest.setTaxAmount(taxAmount);
         orderRequest.setThreeDForce(threeDForce);
         orderRequest.setPartialPayment(partialPayment);
-        orderRequest.setPaymentMethods(paymentMethods.isEmpty() ? null : paymentMethods);
+        orderRequest.setPaymentMethods(paymentMethods);
         orderRequest.setPaymentOptions(paymentOptions.isEmpty() ? null : paymentOptions);
         orderRequest.setCheckoutDesign(checkoutDesign);
         orderRequest.setEnabledInstallments(enabledInstallments.isEmpty() ? null : enabledInstallments);

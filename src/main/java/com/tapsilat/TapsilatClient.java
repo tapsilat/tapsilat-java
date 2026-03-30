@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tapsilat.config.TapsilatConfig;
 import com.tapsilat.exception.TapsilatException;
 import com.tapsilat.service.OrderService;
+import com.tapsilat.service.OrganizationService;
 import com.tapsilat.service.SubscriptionService;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
@@ -25,15 +26,18 @@ public class TapsilatClient implements AutoCloseable {
 
     private final OrderService orders;
     private final SubscriptionService subscriptions;
+    private final OrganizationService organization;
 
     public TapsilatClient(TapsilatConfig config) {
         Objects.requireNonNull(config, "TapsilatConfig cannot be null");
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setSerializationInclusion(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL);
 
         this.httpClient = HttpClients.createDefault();
 
         this.orders = new OrderService(httpClient, config, objectMapper);
         this.subscriptions = new SubscriptionService(httpClient, config, objectMapper);
+        this.organization = new OrganizationService(httpClient, config, objectMapper);
     }
 
     /**
@@ -45,6 +49,10 @@ public class TapsilatClient implements AutoCloseable {
 
     public SubscriptionService subscriptions() {
         return subscriptions;
+    }
+
+    public OrganizationService organization() {
+        return organization;
     }
 
     /**

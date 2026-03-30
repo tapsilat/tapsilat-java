@@ -31,12 +31,18 @@ public class OrderService extends BaseService {
             if (response != null && response.getOrderId() != null
                     && (response.getCheckoutUrl() == null || response.getCheckoutUrl().isEmpty())) {
                 try {
+                    logger.info("Checkout URL missing for order {}, fetching details...", response.getReferenceId());
                     OrderResponse details = get(response.getReferenceId());
                     if (details != null) {
+                        logger.info("Fetched details for order {}: checkoutUrl={}", response.getReferenceId(),
+                                details.getCheckoutUrl());
                         response.setCheckoutUrl(details.getCheckoutUrl());
+                    } else {
+                        logger.warn("Fetched details for order {} were null", response.getReferenceId());
                     }
                 } catch (Exception e) {
-                    logger.warn("Failed to fetch fallback checkout URL: {}", e.getMessage());
+                    logger.error("Failed to fetch fallback checkout URL for order {}: {}", response.getReferenceId(),
+                            e.getMessage(), e);
                 }
             }
             return response;
@@ -210,7 +216,9 @@ public class OrderService extends BaseService {
     @SuppressWarnings("unchecked")
     public Map<String, Object> getTerm(String termReferenceId) throws TapsilatException {
         try {
-            return executeRequest(buildRequest("GET", "/api/v1/order/term/" + termReferenceId, null, null), Map.class);
+            Map<String, String> params = new HashMap<>();
+            params.put("term_reference_id", termReferenceId);
+            return executeRequest(buildRequest("GET", TapsilatConstants.ENDPOINT_ORDER_TERM, null, params), Map.class);
         } catch (IOException | ParseException e) {
             throw new TapsilatException("Failed to get order term", e);
         }
@@ -233,7 +241,7 @@ public class OrderService extends BaseService {
             Map<String, String> payload = new HashMap<>();
             payload.put("order_id", orderId);
             payload.put("term_reference_id", termReferenceId);
-            return executeRequest(buildRequest("POST", TapsilatConstants.ENDPOINT_ORDER_TERM_DELETE, payload, null),
+            return executeRequest(buildRequest("DELETE", TapsilatConstants.ENDPOINT_ORDER_TERM_DELETE, payload, null),
                     Map.class);
         } catch (IOException | ParseException e) {
             throw new TapsilatException("Failed to delete term", e);
@@ -243,7 +251,7 @@ public class OrderService extends BaseService {
     @SuppressWarnings("unchecked")
     public Map<String, Object> updateTerm(OrderPaymentTermUpdateRequest request) throws TapsilatException {
         try {
-            return executeRequest(buildRequest("POST", TapsilatConstants.ENDPOINT_ORDER_TERM_UPDATE, request, null),
+            return executeRequest(buildRequest("PATCH", TapsilatConstants.ENDPOINT_ORDER_TERM_UPDATE, request, null),
                     Map.class);
         } catch (IOException | ParseException e) {
             throw new TapsilatException("Failed to update term", e);
@@ -302,10 +310,37 @@ public class OrderService extends BaseService {
             Map<String, String> payload = new HashMap<>();
             payload.put("reference_id", referenceId);
             payload.put("related_reference_id", relatedReferenceId);
-            return executeRequest(buildRequest("POST", TapsilatConstants.ENDPOINT_ORDER_RELATED_UPDATE, payload, null),
+            return executeRequest(buildRequest("PATCH", TapsilatConstants.ENDPOINT_ORDER_RELATED_UPDATE, payload, null),
                     Map.class);
         } catch (IOException | ParseException e) {
             throw new TapsilatException("Failed related update", e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> addBasketItem(AddBasketItemRequest request) throws TapsilatException {
+        try {
+            return executeRequest(buildRequest("POST", "/api/v1/order/basket-item", request, null), Map.class);
+        } catch (IOException | ParseException e) {
+            throw new TapsilatException("Failed to add basket item", e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> removeBasketItem(RemoveBasketItemRequest request) throws TapsilatException {
+        try {
+            return executeRequest(buildRequest("DELETE", "/api/v1/order/basket-item", request, null), Map.class);
+        } catch (IOException | ParseException e) {
+            throw new TapsilatException("Failed to remove basket item", e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> updateBasketItem(UpdateBasketItemRequest request) throws TapsilatException {
+        try {
+            return executeRequest(buildRequest("PATCH", "/api/v1/order/basket-item", request, null), Map.class);
+        } catch (IOException | ParseException e) {
+            throw new TapsilatException("Failed to update basket item", e);
         }
     }
 
