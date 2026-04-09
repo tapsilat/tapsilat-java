@@ -18,8 +18,6 @@ public class OrderRequestBuilder {
     private String currency;
     private String locale;
     private Buyer buyer;
-    private String description;
-    private String callbackUrl;
     private String conversationId;
     private List<Metadata> metadata = new ArrayList<>();
     private ShippingAddress shippingAddress;
@@ -133,28 +131,6 @@ public class OrderRequestBuilder {
      */
     public OrderRequestBuilder buyer(String name, String surname, String email, String phone, String identityNumber) {
         this.buyer = new Buyer(name, surname, email, phone, identityNumber);
-        return this;
-    }
-
-    /**
-     * Set the order description.
-     * 
-     * @param description The description
-     * @return This builder
-     */
-    public OrderRequestBuilder description(String description) {
-        this.description = description;
-        return this;
-    }
-
-    /**
-     * Set the callback URL.
-     * 
-     * @param callbackUrl The callback URL
-     * @return This builder
-     */
-    public OrderRequestBuilder callbackUrl(String callbackUrl) {
-        this.callbackUrl = callbackUrl;
         return this;
     }
 
@@ -414,8 +390,6 @@ public class OrderRequestBuilder {
         orderRequest.setCurrency(currency);
         orderRequest.setLocale(locale);
         orderRequest.setBuyer(buyer);
-        orderRequest.setDescription(description);
-        orderRequest.setCallbackUrl(callbackUrl);
         orderRequest.setConversationId(conversationId);
         orderRequest.setMetadata(metadata.isEmpty() ? null : metadata);
         orderRequest.setShippingAddress(shippingAddress);

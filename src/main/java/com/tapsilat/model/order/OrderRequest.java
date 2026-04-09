@@ -31,12 +31,6 @@ public class OrderRequest {
     @JsonProperty("buyer")
     private Buyer buyer;
 
-    @JsonProperty("description")
-    private String description;
-
-    @JsonProperty("callback_url")
-    private String callbackUrl;
-
     @JsonProperty("conversation_id")
     private String conversationId;
 
@@ -163,22 +157,6 @@ public class OrderRequest {
 
     public void setBuyer(Buyer buyer) {
         this.buyer = Objects.requireNonNull(buyer, "Buyer cannot be null");
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getCallbackUrl() {
-        return callbackUrl;
-    }
-
-    public void setCallbackUrl(String callbackUrl) {
-        this.callbackUrl = callbackUrl;
     }
 
     public String getConversationId() {
@@ -428,8 +406,6 @@ public class OrderRequest {
                 ", currency='" + currency + '\'' +
                 ", locale='" + locale + '\'' +
                 ", buyer=" + buyer +
-                ", description='" + description + '\'' +
-                ", callbackUrl='" + callbackUrl + '\'' +
                 ", conversationId='" + conversationId + '\'' +
                 ", metadata=" + metadata +
                 ", shippingAddress=" + shippingAddress +
