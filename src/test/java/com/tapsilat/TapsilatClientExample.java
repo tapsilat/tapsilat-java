@@ -11,7 +11,6 @@ import com.tapsilat.model.order.OrderRequest;
 import com.tapsilat.model.order.OrderResponse;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 
 /**
  * Example usage of the Tapsilat Java SDK.
@@ -56,8 +55,6 @@ public class TapsilatClientExample {
             orderRequest.setCurrency("TRY");
             orderRequest.setLocale("tr");
             orderRequest.setBuyer(buyer);
-            orderRequest.setDescription("Premium Subscription - Annual Plan");
-            orderRequest.setCallbackUrl("https://your-website.com/payment-complete");
             orderRequest.setConversationId("order-" + System.currentTimeMillis());
             
             // Create order
@@ -95,8 +92,6 @@ public class TapsilatClientExample {
                     .currency("TRY")
                     .locale("tr")
                     .buyer("John", "Doe", "john.doe@example.com", "+9099999999", "11111111111")
-                    .description("Premium Subscription - Annual Plan")
-                    .callbackUrl("https://your-website.com/payment-complete")
                     .conversationId("order-" + System.currentTimeMillis())
                     .build();
             
@@ -135,8 +130,6 @@ public class TapsilatClientExample {
                     .currency(Currency.USD)
                     .locale(Locale.EN)
                     .buyer("Jane", "Smith", "jane.smith@example.com")
-                    .description("Monthly Subscription")
-                    .callbackUrl("https://your-website.com/payment-complete")
                     .conversationId("order-" + System.currentTimeMillis())
                     .build();
             
@@ -180,8 +173,6 @@ public class TapsilatClientExample {
                     .currency(Currency.TRY)
                     .locale(Locale.TR)
                     .buyer("John", "Doe", "john.doe@example.com", "+9099999999", "11111111111")
-                    .description("Premium Subscription - Annual Plan")
-                    .callbackUrl("https://your-website.com/payment-complete")
                     .conversationId("order-" + System.currentTimeMillis())
                     .metadata(productMetadata)
                     .metadata(customerMetadata)

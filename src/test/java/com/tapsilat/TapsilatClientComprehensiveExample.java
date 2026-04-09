@@ -3,7 +3,7 @@ package com.tapsilat;
 import com.tapsilat.config.TapsilatConfig;
 import com.tapsilat.enums.Currency;
 import com.tapsilat.enums.Locale;
-import com.tapsilat.model.common.*; import com.tapsilat.model.order.*; import com.tapsilat.model.subscription.*;
+import com.tapsilat.model.common.*; import com.tapsilat.model.order.*;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -86,8 +86,6 @@ public class TapsilatClientComprehensiveExample {
                     buyer
                 );
                 
-                orderRequest.setDescription("Test Order with Complete Information");
-                orderRequest.setCallbackUrl("https://example.com/callback");
                 orderRequest.setConversationId("test-order-" + System.currentTimeMillis());
                 orderRequest.setShippingAddress(shippingAddress);
                 orderRequest.setBillingAddress(billingAddress);
@@ -96,7 +94,7 @@ public class TapsilatClientComprehensiveExample {
                 orderRequest.setTaxAmount(0.0);
                 orderRequest.setThreeDForce(true);
                 orderRequest.setPartialPayment(false);
-                orderRequest.setPaymentMethods(Arrays.asList("CREDIT_CARD", "DEBIT_CARD"));
+                orderRequest.setPaymentMethods(true);
                 orderRequest.setPaymentOptions(Arrays.asList("INSTALLMENT"));
                 
                 // Create the order

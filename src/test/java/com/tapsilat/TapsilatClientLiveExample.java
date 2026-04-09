@@ -41,8 +41,6 @@ public class TapsilatClientLiveExample {
                     .currency(Currency.TRY)
                     .locale(Locale.TR)
                     .buyer("John", "Doe", "john.doe@example.com", "+9099999999", "11111111111")
-                    .description("Live API test order")
-                    .callbackUrl("https://example.com/payment-complete")
                     .conversationId("order-" + System.currentTimeMillis())
                     .build();
 

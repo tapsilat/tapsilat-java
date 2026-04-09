@@ -41,8 +41,6 @@ class TapsilatClientTest {
                 .currency(Currency.TRY)
                 .locale(Locale.TR)
                 .buyer("John", "Doe", "john.doe@example.com")
-                .description("Test Order")
-                .callbackUrl("https://example.com/callback")
                 .conversationId("test-order-123")
                 .metadata("testKey", "testValue")
                 .build();
@@ -57,8 +55,6 @@ class TapsilatClientTest {
         assertEquals("john.doe@example.com", orderRequest.getBuyer().getEmail());
         
         // Verify optional fields
-        assertEquals("Test Order", orderRequest.getDescription());
-        assertEquals("https://example.com/callback", orderRequest.getCallbackUrl());
         assertEquals("test-order-123", orderRequest.getConversationId());
         assertNotNull(orderRequest.getMetadata());
         assertEquals(1, orderRequest.getMetadata().size());
