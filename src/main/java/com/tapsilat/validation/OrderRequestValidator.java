@@ -39,8 +39,6 @@ public final class OrderRequestValidator {
         validateCurrency(request.getCurrency(), errors);
         validateLocale(request.getLocale(), errors);
         validateBuyer(request.getBuyer(), errors);
-        validateDescription(request.getDescription(), errors);
-        validateCallbackUrl(request.getCallbackUrl(), errors);
         validateConversationId(request.getConversationId(), errors);
 
         // Parity with Python: Clean GSM number if present
@@ -51,7 +49,7 @@ public final class OrderRequestValidator {
             }
         }
 
-        // Parity with Python: Validate installments
+        // Parity with other SDKs: Validate installments
         if (request.getEnabledInstallments() != null) {
             validateInstallmentsList(request.getEnabledInstallments(), errors);
         }
@@ -113,20 +111,7 @@ public final class OrderRequestValidator {
         }
     }
 
-    private static void validateDescription(String description, List<String> errors) {
-        if (description != null && description.length() > TapsilatConstants.MAX_DESCRIPTION_LENGTH) {
-            errors.add("Description exceeds maximum length of " + TapsilatConstants.MAX_DESCRIPTION_LENGTH
-                    + " characters, got: " + description.length());
-        }
-    }
 
-    private static void validateCallbackUrl(String callbackUrl, List<String> errors) {
-        if (callbackUrl != null && !callbackUrl.trim().isEmpty()) {
-            if (!isValidUrl(callbackUrl)) {
-                errors.add("Callback URL format is invalid: " + callbackUrl);
-            }
-        }
-    }
 
     private static void validateConversationId(String conversationId, List<String> errors) {
         if (conversationId != null && conversationId.length() > TapsilatConstants.MAX_CONVERSATION_ID_LENGTH) {
@@ -140,34 +125,24 @@ public final class OrderRequestValidator {
         return email != null && email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
     }
 
-    private static boolean isValidUrl(String url) {
-        // Basic URL validation - checks for http/https scheme
-        return url != null && (url.startsWith("http://") || url.startsWith("https://"));
-    }
 
+
+    /**
+     * Cleans GSM number by removing non-digit characters and enforcing minimum length.
+     * Universal logic: keeps only digits (and + prefix if present), min length 5.
+     */
     public static String cleanGsmNumber(String phone, List<String> errors) {
         if (phone == null || phone.isEmpty())
             return phone;
 
-        String cleanPhone = phone.replaceAll("[\\s\\-\\(\\)]", "");
+        // Keep digits and + prefix
+        String cleanPhone = phone.replaceAll("[^\\d+]", "");
 
-        if (!cleanPhone.replaceAll("\\+", "").matches("\\d+")) {
-            errors.add("Invalid phone number format: " + phone);
+        // Enforce minimum length of 5 digits
+        String digitsOnly = cleanPhone.replaceAll("\\+", "");
+        if (digitsOnly.length() < 5) {
+            errors.add("Phone number too short (minimum 5 digits required): " + phone);
             return cleanPhone;
-        }
-
-        if (cleanPhone.startsWith("+")) {
-            if (cleanPhone.length() < 8)
-                errors.add("International phone number too short: " + phone);
-        } else if (cleanPhone.startsWith("00")) {
-            if (cleanPhone.length() < 9)
-                errors.add("International phone number (00 format) too short: " + phone);
-        } else if (cleanPhone.startsWith("0")) {
-            if (cleanPhone.length() < 7)
-                errors.add("National phone number too short: " + phone);
-        } else {
-            if (cleanPhone.length() < 6)
-                errors.add("Local phone number too short: " + phone);
         }
 
         return cleanPhone;
