@@ -1,4 +1,6 @@
-package com.tapsilat;
+package com.tapsilat.unit;
+
+import com.tapsilat.TapsilatClient;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tapsilat.builder.OrderRequestBuilder;
@@ -8,7 +10,7 @@ import com.tapsilat.enums.Locale;
 import com.tapsilat.exception.TapsilatException;
 import com.tapsilat.model.common.Buyer;
 import com.tapsilat.model.common.Metadata;
-import com.tapsilat.model.order.OrderRequest;
+import com.tapsilat.model.order.OrderCreateRequest;
 import com.tapsilat.model.order.OrderResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,7 +38,7 @@ class TapsilatClientTest {
     @Test
     void testOrderRequestBuilder() {
         // Test builder pattern
-        OrderRequest orderRequest = OrderRequestBuilder.newBuilder()
+        OrderCreateRequest orderRequest = OrderRequestBuilder.newBuilder()
                 .amount(150.75)
                 .currency(Currency.TRY)
                 .locale(Locale.TR)
@@ -69,15 +71,16 @@ class TapsilatClientTest {
         assertEquals("John", buyer1.getName());
         assertEquals("Doe", buyer1.getSurname());
         assertEquals("john.doe@example.com", buyer1.getEmail());
-        assertNull(buyer1.getPhone());
+        assertNull(buyer1.getGsmNumber());
         assertNull(buyer1.getIdentityNumber());
         
         // Test buyer with all fields
-        Buyer buyer2 = new Buyer("Jane", "Smith", "jane.smith@example.com", "+1234567890", "123456789");
+        Buyer buyer2 = new Buyer("Jane", "Smith", "jane.smith@example.com", "123456789");
+        buyer2.setGsmNumber("+1234567890");
         assertEquals("Jane", buyer2.getName());
         assertEquals("Smith", buyer2.getSurname());
         assertEquals("jane.smith@example.com", buyer2.getEmail());
-        assertEquals("+1234567890", buyer2.getPhone());
+        assertEquals("+1234567890", buyer2.getGsmNumber());
         assertEquals("123456789", buyer2.getIdentityNumber());
     }
     
@@ -159,7 +162,7 @@ class TapsilatClientTest {
         });
         
         // Test order request with null amount
-        OrderRequest invalidRequest1 = new OrderRequest();
+        OrderCreateRequest invalidRequest1 = new OrderCreateRequest();
         invalidRequest1.setCurrency("TRY");
         invalidRequest1.setLocale("tr");
         invalidRequest1.setBuyer(new Buyer("John", "Doe", "john@example.com"));
@@ -169,7 +172,7 @@ class TapsilatClientTest {
         });
         
         // Test order request with null buyer
-        OrderRequest invalidRequest2 = new OrderRequest();
+        OrderCreateRequest invalidRequest2 = new OrderCreateRequest();
         invalidRequest2.setAmount(new BigDecimal("100"));
         invalidRequest2.setCurrency("TRY");
         invalidRequest2.setLocale("tr");

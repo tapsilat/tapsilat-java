@@ -1,11 +1,13 @@
-package com.tapsilat;
+package com.tapsilat.integration;
+
+import com.tapsilat.TapsilatClient;
 
 import com.tapsilat.builder.OrderRequestBuilder;
 import com.tapsilat.config.TapsilatConfig;
 import com.tapsilat.enums.Currency;
 import com.tapsilat.enums.Locale;
 import com.tapsilat.exception.TapsilatException;
-import com.tapsilat.model.order.OrderRequest;
+import com.tapsilat.model.order.OrderCreateRequest;
 import com.tapsilat.model.order.OrderResponse;
 
 import java.math.BigDecimal;
@@ -36,7 +38,7 @@ public class TapsilatClientLiveExample {
         TapsilatClient client = new TapsilatClient(config);
 
         try {
-            OrderRequest orderRequest = OrderRequestBuilder.newBuilder()
+            OrderCreateRequest orderRequest = OrderRequestBuilder.newBuilder()
                     .amount(new BigDecimal("10.00"))
                     .currency(Currency.TRY)
                     .locale(Locale.TR)

@@ -1,4 +1,4 @@
-package com.tapsilat;
+package com.tapsilat.unit.model;
 
 import com.tapsilat.model.common.*; import com.tapsilat.model.order.*; import com.tapsilat.model.subscription.*;
 import org.junit.jupiter.api.Test;
@@ -27,8 +27,10 @@ class ModelTest {
         assertNotEquals(buyer1.hashCode(), buyer3.hashCode());
         
         // Test with optional fields
-        Buyer buyer4 = new Buyer("John", "Doe", "john@example.com", "+123", "123");
-        Buyer buyer5 = new Buyer("John", "Doe", "john@example.com", "+123", "123");
+        Buyer buyer4 = new Buyer("John", "Doe", "john@example.com", "123");
+        buyer4.setGsmNumber("+123");
+        Buyer buyer5 = new Buyer("John", "Doe", "john@example.com", "123");
+        buyer5.setGsmNumber("+123");
         assertEquals(buyer4, buyer5);
         assertEquals(buyer4.hashCode(), buyer5.hashCode());
     }

@@ -1,4 +1,6 @@
-package com.tapsilat;
+package com.tapsilat.integration;
+
+import com.tapsilat.TapsilatClient;
 
 import com.tapsilat.config.TapsilatConfig;
 import com.tapsilat.enums.Currency;
@@ -25,7 +27,7 @@ public class TapsilatClientComprehensiveExample {
                 
                 // Create buyer information
                 Buyer buyer = new Buyer("John", "Doe", "johndoe@example.com");
-                buyer.setPhone("+905321234567");
+                buyer.setGsmNumber("+905321234567");
                 buyer.setIdentityNumber("12345678901");
                 
                 // Create shipping address
@@ -79,7 +81,7 @@ public class TapsilatClientComprehensiveExample {
                 Metadata metadata2 = new Metadata("customer_segment", "premium");
                 
                 // Build the complete order request
-                OrderRequest orderRequest = new OrderRequest(
+                OrderCreateRequest orderRequest = new OrderCreateRequest(
                     new BigDecimal("150.00"),
                     Currency.TRY.getCode(),
                     Locale.TR.getCode(),

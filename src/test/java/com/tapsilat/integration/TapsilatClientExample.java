@@ -1,4 +1,6 @@
-package com.tapsilat;
+package com.tapsilat.integration;
+
+import com.tapsilat.TapsilatClient;
 
 import com.tapsilat.builder.OrderRequestBuilder;
 import com.tapsilat.config.TapsilatConfig;
@@ -7,7 +9,7 @@ import com.tapsilat.enums.Locale;
 import com.tapsilat.exception.TapsilatException;
 import com.tapsilat.model.common.Buyer;
 import com.tapsilat.model.common.Metadata;
-import com.tapsilat.model.order.OrderRequest;
+import com.tapsilat.model.order.OrderCreateRequest;
 import com.tapsilat.model.order.OrderResponse;
 
 import java.math.BigDecimal;
@@ -47,10 +49,11 @@ public class TapsilatClientExample {
             TapsilatClient client = new TapsilatClient(config);
             
             // Create buyer
-            Buyer buyer = new Buyer("John", "Doe", "john.doe@example.com", "+9099999999", "11111111111");
+            Buyer buyer = new Buyer("John", "Doe", "john.doe@example.com", "11111111111");
+            buyer.setGsmNumber("+9099999999");
             
             // Create order request
-            OrderRequest orderRequest = new OrderRequest();
+            OrderCreateRequest orderRequest = new OrderCreateRequest();
             orderRequest.setAmount(new BigDecimal("150.75"));
             orderRequest.setCurrency("TRY");
             orderRequest.setLocale("tr");
@@ -87,7 +90,7 @@ public class TapsilatClientExample {
             TapsilatClient client = new TapsilatClient(config);
             
             // Create order request using builder
-            OrderRequest orderRequest = OrderRequestBuilder.newBuilder()
+            OrderCreateRequest orderRequest = OrderRequestBuilder.newBuilder()
                     .amount(150.75)
                     .currency("TRY")
                     .locale("tr")
@@ -125,7 +128,7 @@ public class TapsilatClientExample {
             TapsilatClient client = new TapsilatClient(config);
             
             // Create order request using enums
-            OrderRequest orderRequest = OrderRequestBuilder.newBuilder()
+            OrderCreateRequest orderRequest = OrderRequestBuilder.newBuilder()
                     .amount(new BigDecimal("99.99"))
                     .currency(Currency.USD)
                     .locale(Locale.EN)
@@ -168,7 +171,7 @@ public class TapsilatClientExample {
             Metadata campaignMetadata = new Metadata("campaign", "summer2025");
             
             // Create order request with metadata
-            OrderRequest orderRequest = OrderRequestBuilder.newBuilder()
+            OrderCreateRequest orderRequest = OrderRequestBuilder.newBuilder()
                     .amount(150.75)
                     .currency(Currency.TRY)
                     .locale(Locale.TR)
