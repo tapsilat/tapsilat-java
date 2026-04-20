@@ -58,7 +58,7 @@ public class TapsilatClient implements AutoCloseable {
     /**
      * Backward compatibility method for createOrder.
      */
-    public com.tapsilat.model.order.OrderResponse createOrder(com.tapsilat.model.order.OrderRequest request)
+    public com.tapsilat.model.order.OrderResponse createOrder(com.tapsilat.model.order.OrderCreateRequest request)
             throws TapsilatException {
         return orders.create(request);
     }

@@ -37,7 +37,8 @@ public class SubscriptionService extends BaseService {
         }
     }
 
-    public List<SubscriptionListItem> list(Integer page, Integer perPage) throws TapsilatException {
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> list(Integer page, Integer perPage) throws TapsilatException {
         try {
             Map<String, String> params = new HashMap<>();
             if (page != null)
@@ -45,10 +46,9 @@ public class SubscriptionService extends BaseService {
             if (perPage != null)
                 params.put("per_page", String.valueOf(perPage));
 
-            SubscriptionListItem[] items = executeRequest(
+            return executeRequest(
                     buildRequest("GET", TapsilatConstants.ENDPOINT_SUBSCRIPTION_LIST, null, params),
-                    SubscriptionListItem[].class);
-            return items != null ? java.util.Arrays.asList(items) : java.util.Collections.emptyList();
+                    Map.class);
         } catch (IOException | ParseException e) {
             throw new TapsilatException("Failed to list subscriptions", e);
         }

@@ -47,3 +47,7 @@ ExhaustiveVerify.java
 *-result.md
 *test-result*
 *.log
+
+apache-maven-3.9.6
+
+src/main/docker

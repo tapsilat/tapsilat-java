@@ -20,7 +20,7 @@ public class OrderService extends BaseService {
         super(httpClient, config, objectMapper);
     }
 
-    public OrderResponse create(OrderRequest orderRequest) throws TapsilatException {
+    public OrderResponse create(OrderCreateRequest orderRequest) throws TapsilatException {
         try {
             OrderRequestValidator.validateOrThrow(orderRequest);
             OrderResponse response = executeRequest(

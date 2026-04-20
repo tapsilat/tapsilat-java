@@ -2,14 +2,14 @@ package com.tapsilat.validation;
 
 import com.tapsilat.constants.TapsilatConstants;
 import com.tapsilat.model.common.Buyer;
-import com.tapsilat.model.order.OrderRequest;
+import com.tapsilat.model.order.OrderCreateRequest;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Validates OrderRequest objects before sending to Tapsilat API.
+ * Validates OrderCreateRequest objects before sending to Tapsilat API.
  * Provides detailed validation error messages with field context.
  */
 public final class OrderRequestValidator {
@@ -21,16 +21,16 @@ public final class OrderRequestValidator {
     }
 
     /**
-     * Validates an OrderRequest and returns list of validation errors.
+     * Validates an OrderCreateRequest and returns list of validation errors.
      * Empty list indicates valid request.
      * 
      * @param request The order request to validate
      * @return List of validation error messages, empty if valid
      * @throws ValidationException if request is null
      */
-    public static List<String> validate(OrderRequest request) {
+    public static List<String> validate(OrderCreateRequest request) {
         if (request == null) {
-            throw new ValidationException("OrderRequest cannot be null");
+            throw new ValidationException("OrderCreateRequest cannot be null");
         }
 
         List<String> errors = new ArrayList<>();
@@ -58,12 +58,12 @@ public final class OrderRequestValidator {
     }
 
     /**
-     * Validates an OrderRequest and throws ValidationException if invalid.
+     * Validates an OrderCreateRequest and throws ValidationException if invalid.
      * 
      * @param request The order request to validate
      * @throws ValidationException if validation fails
      */
-    public static void validateOrThrow(OrderRequest request) {
+    public static void validateOrThrow(OrderCreateRequest request) {
         List<String> errors = validate(request);
         if (!errors.isEmpty()) {
             throw new ValidationException("Order request validation failed", errors);
@@ -111,8 +111,6 @@ public final class OrderRequestValidator {
         }
     }
 
-
-
     private static void validateConversationId(String conversationId, List<String> errors) {
         if (conversationId != null && conversationId.length() > TapsilatConstants.MAX_CONVERSATION_ID_LENGTH) {
             errors.add("Conversation ID exceeds maximum length of " + TapsilatConstants.MAX_CONVERSATION_ID_LENGTH
@@ -125,10 +123,9 @@ public final class OrderRequestValidator {
         return email != null && email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
     }
 
-
-
     /**
-     * Cleans GSM number by removing non-digit characters and enforcing minimum length.
+     * Cleans GSM number by removing non-digit characters and enforcing minimum
+     * length.
      * Universal logic: keeps only digits (and + prefix if present), min length 5.
      */
     public static String cleanGsmNumber(String phone, List<String> errors) {

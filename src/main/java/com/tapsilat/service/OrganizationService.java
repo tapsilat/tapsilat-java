@@ -124,7 +124,7 @@ public class OrganizationService extends BaseService {
     }
 
     @SuppressWarnings("unchecked")
-    public Map<String, Object> createUser(OrgCreateUserReq request) throws TapsilatException {
+    public Map<String, Object> createUser(OrgCreateUserRequest request) throws TapsilatException {
         try {
             return executeRequest(buildRequest("POST", TapsilatConstants.ENDPOINT_ORGANIZATION_USER_CREATE, request, null), Map.class);
         } catch (IOException | ParseException e) {
@@ -133,7 +133,7 @@ public class OrganizationService extends BaseService {
     }
 
     @SuppressWarnings("unchecked")
-    public Map<String, Object> verifyUser(OrgUserVerifyReq request) throws TapsilatException {
+    public Map<String, Object> verifyUser(OrgUserVerifyRequest request) throws TapsilatException {
         try {
             return executeRequest(buildRequest("POST", TapsilatConstants.ENDPOINT_ORGANIZATION_USER_VERIFY, request, null), Map.class);
         } catch (IOException | ParseException e) {
@@ -142,7 +142,7 @@ public class OrganizationService extends BaseService {
     }
 
     @SuppressWarnings("unchecked")
-    public Map<String, Object> verifyUserMobile(OrgUserMobileVerifyReq request) throws TapsilatException {
+    public Map<String, Object> verifyUserMobile(OrgUserMobileVerifyRequest request) throws TapsilatException {
         try {
             return executeRequest(buildRequest("POST", TapsilatConstants.ENDPOINT_ORGANIZATION_USER_VERIFY_MOBILE, request, null), Map.class);
         } catch (IOException | ParseException e) {
