@@ -7,6 +7,7 @@ import com.tapsilat.model.order.*;
 import com.tapsilat.model.common.*;
 import com.tapsilat.model.subscription.*;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
@@ -26,6 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Reads TAPSILAT_API_KEY from environment variable or .env file.
  * Mirrors tapsilat-py/tests/integration/integration_test.py
  */
+@Tag("integration")
 public class IntegrationTest {
 
     private TapsilatClient client;
@@ -269,7 +271,7 @@ public class IntegrationTest {
         assertNotNull(subscription);
 
         // List Subscriptions
-        Map<String, Object> subscriptions = client.subscriptions().list(1, 10);
+        List<SubscriptionListItem> subscriptions = client.subscriptions().list(1, 10);
         assertNotNull(subscriptions);
 
         // Redirect Subscription

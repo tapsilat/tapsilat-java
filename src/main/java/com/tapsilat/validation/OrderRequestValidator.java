@@ -92,7 +92,6 @@ public final class OrderRequestValidator {
 
     private static void validateBuyer(Buyer buyer, List<String> errors) {
         if (buyer == null) {
-            errors.add("Buyer information is required and cannot be null");
             return;
         }
 
@@ -132,11 +131,12 @@ public final class OrderRequestValidator {
         if (phone == null || phone.isEmpty())
             return phone;
 
-        // Keep digits and + prefix
-        String cleanPhone = phone.replaceAll("[^\\d+]", "");
+        String normalizedPhone = phone.replaceAll("[^\\d+]", "");
+        boolean hasPlusPrefix = normalizedPhone.startsWith("+");
+        String digitsOnly = normalizedPhone.replaceAll("\\D", "");
+        String cleanPhone = hasPlusPrefix ? "+" + digitsOnly : digitsOnly;
 
         // Enforce minimum length of 5 digits
-        String digitsOnly = cleanPhone.replaceAll("\\+", "");
         if (digitsOnly.length() < 5) {
             errors.add("Phone number too short (minimum 5 digits required): " + phone);
             return cleanPhone;

@@ -76,14 +76,14 @@ public class Buyer {
     }
 
     /**
-     * Constructor with all fields.
-     * 
+     * Constructor with required fields and optional identity number.
+     *
      * @param name           Buyer's first name (required)
      * @param surname        Buyer's last name (required)
      * @param email          Buyer's email address (required)
-     * @param phone          Buyer's phone number (optional)
      * @param identityNumber Buyer's identity number (optional)
      * @throws NullPointerException if any required parameter is null
+     * @see #setGsmNumber(String) to set buyer GSM number when needed
      */
     public Buyer(String name, String surname, String email, String identityNumber) {
         this.name = Objects.requireNonNull(name, "Buyer name cannot be null");

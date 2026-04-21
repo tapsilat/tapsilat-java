@@ -326,7 +326,7 @@ public class OrderRequestBuilder {
     }
 
     public OrderRequestBuilder orderCards(List<OrderCard> orderCards) {
-        this.orderCards = new ArrayList<>(orderCards);
+        this.orderCards = orderCards == null ? new ArrayList<>() : new ArrayList<>(orderCards);
         return this;
     }
     

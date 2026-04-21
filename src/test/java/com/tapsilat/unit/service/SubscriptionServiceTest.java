@@ -88,10 +88,14 @@ class SubscriptionServiceTest {
         String jsonResponse = "{\"page\":1, \"per_page\":10, \"items\":[], \"total\":0}";
         httpClient.setResponse(200, jsonResponse);
 
-        Map<String, Object> response = subscriptionService.list(1, 10);
-
+        List<SubscriptionListItem> response = subscriptionService.list(1, 10);
         assertNotNull(response);
-        assertEquals(1, ((Number) response.get("page")).intValue());
+        assertTrue(response.isEmpty());
+
+        Map<String, Object> rawResponse = subscriptionService.listResponse(1, 10);
+
+        assertNotNull(rawResponse);
+        assertEquals(1, ((Number) rawResponse.get("page")).intValue());
 
         ClassicHttpRequest captured = httpClient.getCapturedRequest();
         assertEquals("GET", captured.getMethod());

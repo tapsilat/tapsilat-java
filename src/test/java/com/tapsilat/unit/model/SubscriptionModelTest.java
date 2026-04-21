@@ -35,6 +35,7 @@ class SubscriptionModelTest {
         request.setPeriod(1);
         request.setExternalReferenceId("sub-ref-123");
         request.setSuccessUrl("http://callback.test");
+        request.setPriceOption(new SubscriptionPriceOption(2, new BigDecimal("49.99")));
 
         String json = mapper.writeValueAsString(request);
         JsonNode node = mapper.readTree(json);
@@ -46,6 +47,8 @@ class SubscriptionModelTest {
         assertEquals("sub-ref-123", node.get("external_reference_id").asText());
         assertEquals("http://callback.test", node.get("success_url").asText());
         assertEquals("Sub", node.get("user").get("first_name").asText());
+        assertEquals(2, node.get("price_option").get("count").asInt());
+        assertEquals(49.99, node.get("price_option").get("price").asDouble());
     }
 
     @Test

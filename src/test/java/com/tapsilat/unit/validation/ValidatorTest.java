@@ -44,6 +44,14 @@ class ValidatorTest {
     }
 
     @Test
+    void testCleanGsmNumber_StripsPlusSignsNotAtStart() {
+        List<String> errors = new ArrayList<>();
+        String result = OrderRequestValidator.cleanGsmNumber("12+34+567", errors);
+        assertEquals("1234567", result);
+        assertTrue(errors.isEmpty());
+    }
+
+    @Test
     void testCleanGsmNumber_TooShort() {
         List<String> errors = new ArrayList<>();
         OrderRequestValidator.cleanGsmNumber("123", errors);
@@ -182,8 +190,7 @@ class ValidatorTest {
         request.setLocale("tr");
 
         List<String> errors = OrderRequestValidator.validate(request);
-        assertFalse(errors.isEmpty());
-        assertTrue(errors.stream().anyMatch(e -> e.contains("Buyer")));
+        assertTrue(errors.isEmpty());
     }
 
     @Test

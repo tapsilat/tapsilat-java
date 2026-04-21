@@ -12,6 +12,7 @@ import com.tapsilat.model.common.Buyer;
 import com.tapsilat.model.common.Metadata;
 import com.tapsilat.model.order.OrderCreateRequest;
 import com.tapsilat.model.order.OrderResponse;
+import com.tapsilat.validation.OrderRequestValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -171,15 +172,17 @@ class TapsilatClientTest {
             client.createOrder(invalidRequest1);
         });
         
-        // Test order request with null buyer
-        OrderCreateRequest invalidRequest2 = new OrderCreateRequest();
-        invalidRequest2.setAmount(new BigDecimal("100"));
-        invalidRequest2.setCurrency("TRY");
-        invalidRequest2.setLocale("tr");
-        
-        assertThrows(TapsilatException.class, () -> {
-            client.createOrder(invalidRequest2);
-        });
+        // Buyer is optional for order validation
+        OrderCreateRequest requestWithoutBuyer = new OrderCreateRequest();
+        requestWithoutBuyer.setAmount(new BigDecimal("100"));
+        requestWithoutBuyer.setCurrency("TRY");
+        requestWithoutBuyer.setLocale("tr");
+        assertTrue(OrderRequestValidator.validate(requestWithoutBuyer).isEmpty());
+    }
+
+    @Test
+    void testOrderBuilderAcceptsNullOrderCardsList() {
+        assertDoesNotThrow(() -> OrderRequestBuilder.newBuilder().orderCards(null));
     }
     
     @Test
