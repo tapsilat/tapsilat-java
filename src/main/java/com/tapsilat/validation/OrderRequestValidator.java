@@ -131,9 +131,14 @@ public final class OrderRequestValidator {
         if (phone == null || phone.isEmpty())
             return phone;
 
-        String normalizedPhone = phone.replaceAll("[^\\d+]", "");
-        boolean hasPlusPrefix = normalizedPhone.startsWith("+");
-        String digitsOnly = normalizedPhone.replaceAll("\\D", "");
+        boolean hasPlusPrefix = phone.trim().startsWith("+");
+        StringBuilder digitsBuilder = new StringBuilder();
+        for (char c : phone.toCharArray()) {
+            if (Character.isDigit(c)) {
+                digitsBuilder.append(c);
+            }
+        }
+        String digitsOnly = digitsBuilder.toString();
         String cleanPhone = hasPlusPrefix ? "+" + digitsOnly : digitsOnly;
 
         // Enforce minimum length of 5 digits
