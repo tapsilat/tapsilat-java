@@ -44,7 +44,7 @@ class ValidatorTest {
     }
 
     @Test
-    void testCleanGsmNumber_StripsPlusSignsNotAtStart() {
+    void testCleanGsmNumber_StripsEmbeddedPlusSigns() {
         List<String> errors = new ArrayList<>();
         String result = OrderRequestValidator.cleanGsmNumber("12+34+567", errors);
         assertEquals("1234567", result);
