@@ -268,19 +268,7 @@ public class OrderService extends BaseService {
         }
     }
 
-    @SuppressWarnings("unchecked")
-    public Map<String, Object> terminateTerm(String termReferenceId, String reason) throws TapsilatException {
-        try {
-            Map<String, String> payload = new HashMap<>();
-            payload.put("term_reference_id", termReferenceId);
-            if (reason != null)
-                payload.put("reason", reason);
-            return executeRequest(buildRequest("POST", TapsilatConstants.ENDPOINT_ORDER_TERM_TERMINATE, payload, null),
-                    Map.class);
-        } catch (IOException | ParseException e) {
-            throw new TapsilatException("Failed to terminate term", e);
-        }
-    }
+
 
     @SuppressWarnings("unchecked")
     public Map<String, Object> terminate(String referenceId) throws TapsilatException {

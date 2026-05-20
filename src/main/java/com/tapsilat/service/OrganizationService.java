@@ -149,4 +149,33 @@ public class OrganizationService extends BaseService {
             throw new TapsilatException("Failed to verify organization user mobile", e);
         }
     }
+
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> getCurrencyPresets() throws TapsilatException {
+        try {
+            return executeRequest(buildRequest("GET", TapsilatConstants.ENDPOINT_ORGANIZATION_CURRENCY_PRESETS, null, null), Map.class);
+        } catch (IOException | ParseException e) {
+            throw new TapsilatException("Failed to get organization currency presets", e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> getSuborganizationDetails(String id) throws TapsilatException {
+        try {
+            String endpoint = String.format(TapsilatConstants.ENDPOINT_ORGANIZATION_SUBORGANIZATION_DETAILS, id);
+            return executeRequest(buildRequest("GET", endpoint, null, null), Map.class);
+        } catch (IOException | ParseException e) {
+            throw new TapsilatException("Failed to get organization suborganization details", e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> getSuborganizationSubmerchants(String id) throws TapsilatException {
+        try {
+            String endpoint = String.format(TapsilatConstants.ENDPOINT_ORGANIZATION_SUBORGANIZATION_SUBMERCHANTS, id);
+            return executeRequest(buildRequest("GET", endpoint, null, null), Map.class);
+        } catch (IOException | ParseException e) {
+            throw new TapsilatException("Failed to get organization suborganization submerchants", e);
+        }
+    }
 }

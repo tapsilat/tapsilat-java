@@ -51,7 +51,9 @@ public final class TapsilatConstants {
     public static final String ENDPOINT_SUBSCRIPTION_CREATE = "/api/v1/subscription/create";
     public static final String ENDPOINT_SUBSCRIPTION_LIST = "/api/v1/subscription/list";
     public static final String ENDPOINT_SUBSCRIPTION_REDIRECT = "/api/v1/subscription/redirect";
-    public static final String ENDPOINT_ORDER_TERM_TERMINATE = "/api/v1/order/term/terminate";
+    public static final String ENDPOINT_ORGANIZATION_CURRENCY_PRESETS = "/api/v1/organization/currency-presets";
+    public static final String ENDPOINT_ORGANIZATION_SUBORGANIZATION_DETAILS = "/api/v1/organization/suborganizations/%s";
+    public static final String ENDPOINT_ORGANIZATION_SUBORGANIZATION_SUBMERCHANTS = "/api/v1/organization/suborganizations/%s/submerchant";
     public static final String ENDPOINT_HEALTH = "/api/v1/health";
 
     // Default Configuration

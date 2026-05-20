@@ -536,18 +536,7 @@ class OrderServiceTest {
         assertTrue(captured.getUri().toString().contains("/order/term/refund"));
     }
 
-    @Test
-    void testTerminateTerm() throws Exception {
-        httpClient.setResponse(200, "{\"success\":true}");
 
-        Map<String, Object> response = orderService.terminateTerm("term-ref-id", "Cancelled by user");
-
-        assertNotNull(response);
-
-        ClassicHttpRequest captured = httpClient.getCapturedRequest();
-        assertEquals("POST", captured.getMethod());
-        assertTrue(captured.getUri().toString().contains("/order/term/terminate"));
-    }
 
     // ==================== terminate ====================
 
