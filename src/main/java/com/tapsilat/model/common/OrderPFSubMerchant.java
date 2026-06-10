@@ -41,6 +41,12 @@ public class OrderPFSubMerchant {
     @JsonProperty("terminal_no")
     private String terminalNo;
 
+    @JsonProperty("national_id")
+    private String nationalId;
+
+    @JsonProperty("switch_id")
+    private String switchId;
+
     public String getAddress() {
         return address;
     }
@@ -135,5 +141,21 @@ public class OrderPFSubMerchant {
 
     public void setTerminalNo(String terminalNo) {
         this.terminalNo = terminalNo;
+    }
+
+    public String getNationalId() {
+        return nationalId;
+    }
+
+    public void setNationalId(String nationalId) {
+        this.nationalId = nationalId;
+    }
+
+    public String getSwitchId() {
+        return switchId;
+    }
+
+    public void setSwitchId(String switchId) {
+        this.switchId = switchId;
     }
 }

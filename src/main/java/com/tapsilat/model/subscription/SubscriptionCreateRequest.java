@@ -34,6 +34,13 @@ public class SubscriptionCreateRequest {
     @JsonProperty("period")
     private Integer period;
 
+    /**
+     * @deprecated Use amount/cycle/period fields according to latest API shape.
+     */
+    @Deprecated
+    @JsonProperty("price_option")
+    private SubscriptionPriceOption priceOption;
+
     @JsonProperty("success_url")
     private String successUrl;
 
@@ -42,9 +49,6 @@ public class SubscriptionCreateRequest {
 
     @JsonProperty("user")
     private SubscriptionUser user;
-
-    @JsonProperty("price_option")
-    private SubscriptionPriceOption priceOption;
 
     public BigDecimal getAmount() {
         return amount;
@@ -118,6 +122,22 @@ public class SubscriptionCreateRequest {
         this.period = period;
     }
 
+    /**
+     * @deprecated Use amount/cycle/period fields according to latest API shape.
+     */
+    @Deprecated
+    public SubscriptionPriceOption getPriceOption() {
+        return priceOption;
+    }
+
+    /**
+     * @deprecated Use amount/cycle/period fields according to latest API shape.
+     */
+    @Deprecated
+    public void setPriceOption(SubscriptionPriceOption priceOption) {
+        this.priceOption = priceOption;
+    }
+
     public String getSuccessUrl() {
         return successUrl;
     }
@@ -140,13 +160,5 @@ public class SubscriptionCreateRequest {
 
     public void setUser(SubscriptionUser user) {
         this.user = user;
-    }
-
-    public SubscriptionPriceOption getPriceOption() {
-        return priceOption;
-    }
-
-    public void setPriceOption(SubscriptionPriceOption priceOption) {
-        this.priceOption = priceOption;
     }
 }

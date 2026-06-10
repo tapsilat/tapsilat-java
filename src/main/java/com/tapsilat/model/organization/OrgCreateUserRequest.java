@@ -2,7 +2,7 @@ package com.tapsilat.model.organization;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class OrgCreateUserReq {
+public class OrgCreateUserRequest {
     @JsonProperty("email")
     private String email;
 
@@ -27,7 +27,7 @@ public class OrgCreateUserReq {
     @JsonProperty("reference_id")
     private String referenceId;
 
-    public OrgCreateUserReq() {}
+    public OrgCreateUserRequest() {}
 
     public String getEmail() {
         return email;

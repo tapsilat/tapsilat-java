@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Builder class for creating OrderRequest objects easily.
+ * Builder class for creating OrderCreateRequest objects easily.
  */
 public class OrderRequestBuilder {
 
@@ -18,8 +18,6 @@ public class OrderRequestBuilder {
     private String currency;
     private String locale;
     private Buyer buyer;
-    private String description;
-    private String callbackUrl;
     private String conversationId;
     private List<Metadata> metadata = new ArrayList<>();
     private ShippingAddress shippingAddress;
@@ -132,29 +130,8 @@ public class OrderRequestBuilder {
      * @return This builder
      */
     public OrderRequestBuilder buyer(String name, String surname, String email, String phone, String identityNumber) {
-        this.buyer = new Buyer(name, surname, email, phone, identityNumber);
-        return this;
-    }
-
-    /**
-     * Set the order description.
-     * 
-     * @param description The description
-     * @return This builder
-     */
-    public OrderRequestBuilder description(String description) {
-        this.description = description;
-        return this;
-    }
-
-    /**
-     * Set the callback URL.
-     * 
-     * @param callbackUrl The callback URL
-     * @return This builder
-     */
-    public OrderRequestBuilder callbackUrl(String callbackUrl) {
-        this.callbackUrl = callbackUrl;
+        this.buyer = new Buyer(name, surname, email, identityNumber);
+        this.buyer.setGsmNumber(phone);
         return this;
     }
 
@@ -316,7 +293,7 @@ public class OrderRequestBuilder {
     private CheckoutDesign checkoutDesign;
     private List<Integer> enabledInstallments = new ArrayList<>();
     private String externalReferenceId;
-    private OrderCard orderCards;
+    private List<OrderCard> orderCards = new ArrayList<>();
     private BigDecimal paidAmount;
     private String paymentFailureUrl;
     private String paymentMode;
@@ -348,8 +325,13 @@ public class OrderRequestBuilder {
         return this;
     }
 
-    public OrderRequestBuilder orderCards(OrderCard orderCards) {
-        this.orderCards = orderCards;
+    public OrderRequestBuilder orderCards(List<OrderCard> orderCards) {
+        this.orderCards = orderCards == null ? new ArrayList<>() : new ArrayList<>(orderCards);
+        return this;
+    }
+    
+    public OrderRequestBuilder addOrderCard(OrderCard orderCard) {
+        this.orderCards.add(orderCard);
         return this;
     }
 
@@ -404,18 +386,16 @@ public class OrderRequestBuilder {
     }
 
     /**
-     * Build the OrderRequest object.
+     * Build the OrderCreateRequest object.
      * 
-     * @return The constructed OrderRequest
+     * @return The constructed OrderCreateRequest
      */
-    public OrderRequest build() {
-        OrderRequest orderRequest = new OrderRequest();
+    public OrderCreateRequest build() {
+        OrderCreateRequest orderRequest = new OrderCreateRequest();
         orderRequest.setAmount(amount);
         orderRequest.setCurrency(currency);
         orderRequest.setLocale(locale);
         orderRequest.setBuyer(buyer);
-        orderRequest.setDescription(description);
-        orderRequest.setCallbackUrl(callbackUrl);
         orderRequest.setConversationId(conversationId);
         orderRequest.setMetadata(metadata.isEmpty() ? null : metadata);
         orderRequest.setShippingAddress(shippingAddress);

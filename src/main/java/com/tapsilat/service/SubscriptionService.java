@@ -9,6 +9,8 @@ import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.core5.http.ParseException;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +40,25 @@ public class SubscriptionService extends BaseService {
     }
 
     public List<SubscriptionListItem> list(Integer page, Integer perPage) throws TapsilatException {
+        Map<String, Object> response = listResponse(page, perPage);
+        if (response == null) {
+            return Collections.emptyList();
+        }
+
+        Object itemsObject = response.get("items");
+        if (!(itemsObject instanceof List<?> items)) {
+            return Collections.emptyList();
+        }
+
+        List<SubscriptionListItem> results = new ArrayList<>(items.size());
+        for (Object item : items) {
+            results.add(objectMapper.convertValue(item, SubscriptionListItem.class));
+        }
+        return results;
+    }
+
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> listResponse(Integer page, Integer perPage) throws TapsilatException {
         try {
             Map<String, String> params = new HashMap<>();
             if (page != null)
@@ -45,10 +66,9 @@ public class SubscriptionService extends BaseService {
             if (perPage != null)
                 params.put("per_page", String.valueOf(perPage));
 
-            SubscriptionListItem[] items = executeRequest(
+            return executeRequest(
                     buildRequest("GET", TapsilatConstants.ENDPOINT_SUBSCRIPTION_LIST, null, params),
-                    SubscriptionListItem[].class);
-            return items != null ? java.util.Arrays.asList(items) : java.util.Collections.emptyList();
+                    Map.class);
         } catch (IOException | ParseException e) {
             throw new TapsilatException("Failed to list subscriptions", e);
         }

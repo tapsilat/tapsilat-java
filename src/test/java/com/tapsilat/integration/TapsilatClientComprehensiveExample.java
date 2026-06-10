@@ -1,9 +1,11 @@
-package com.tapsilat;
+package com.tapsilat.integration;
+
+import com.tapsilat.TapsilatClient;
 
 import com.tapsilat.config.TapsilatConfig;
 import com.tapsilat.enums.Currency;
 import com.tapsilat.enums.Locale;
-import com.tapsilat.model.common.*; import com.tapsilat.model.order.*; import com.tapsilat.model.subscription.*;
+import com.tapsilat.model.common.*; import com.tapsilat.model.order.*;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -25,7 +27,7 @@ public class TapsilatClientComprehensiveExample {
                 
                 // Create buyer information
                 Buyer buyer = new Buyer("John", "Doe", "johndoe@example.com");
-                buyer.setPhone("+905321234567");
+                buyer.setGsmNumber("+905321234567");
                 buyer.setIdentityNumber("12345678901");
                 
                 // Create shipping address
@@ -79,15 +81,13 @@ public class TapsilatClientComprehensiveExample {
                 Metadata metadata2 = new Metadata("customer_segment", "premium");
                 
                 // Build the complete order request
-                OrderRequest orderRequest = new OrderRequest(
+                OrderCreateRequest orderRequest = new OrderCreateRequest(
                     new BigDecimal("150.00"),
                     Currency.TRY.getCode(),
                     Locale.TR.getCode(),
                     buyer
                 );
                 
-                orderRequest.setDescription("Test Order with Complete Information");
-                orderRequest.setCallbackUrl("https://example.com/callback");
                 orderRequest.setConversationId("test-order-" + System.currentTimeMillis());
                 orderRequest.setShippingAddress(shippingAddress);
                 orderRequest.setBillingAddress(billingAddress);
@@ -96,7 +96,7 @@ public class TapsilatClientComprehensiveExample {
                 orderRequest.setTaxAmount(0.0);
                 orderRequest.setThreeDForce(true);
                 orderRequest.setPartialPayment(false);
-                orderRequest.setPaymentMethods(Arrays.asList("CREDIT_CARD", "DEBIT_CARD"));
+                orderRequest.setPaymentMethods(true);
                 orderRequest.setPaymentOptions(Arrays.asList("INSTALLMENT"));
                 
                 // Create the order

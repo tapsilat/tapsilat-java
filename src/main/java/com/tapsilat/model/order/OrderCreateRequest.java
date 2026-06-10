@@ -17,7 +17,7 @@ import java.util.Objects;
  * billingAddress, basketItems, taxAmount, threeDForce, partialPayment,
  * paymentMethods, paymentOptions.
  */
-public class OrderRequest {
+public class OrderCreateRequest {
 
     @JsonProperty("amount")
     private BigDecimal amount;
@@ -30,12 +30,6 @@ public class OrderRequest {
 
     @JsonProperty("buyer")
     private Buyer buyer;
-
-    @JsonProperty("description")
-    private String description;
-
-    @JsonProperty("callback_url")
-    private String callbackUrl;
 
     @JsonProperty("conversation_id")
     private String conversationId;
@@ -77,7 +71,7 @@ public class OrderRequest {
     private String externalReferenceId;
 
     @JsonProperty("order_cards")
-    private OrderCard orderCards;
+    private List<OrderCard> orderCards;
 
     @JsonProperty("paid_amount")
     private BigDecimal paidAmount;
@@ -112,8 +106,9 @@ public class OrderRequest {
     @JsonProperty("consents")
     private List<OrderConsent> consents;
 
+
     // Default constructor for Jackson deserialization
-    public OrderRequest() {
+    public OrderCreateRequest() {
     }
 
     /**
@@ -125,7 +120,7 @@ public class OrderRequest {
      * @param buyer    Buyer information (required)
      * @throws NullPointerException if any required parameter is null
      */
-    public OrderRequest(BigDecimal amount, String currency, String locale, Buyer buyer) {
+    public OrderCreateRequest(BigDecimal amount, String currency, String locale, Buyer buyer) {
         this.amount = Objects.requireNonNull(amount, "Amount cannot be null");
         this.currency = Objects.requireNonNull(currency, "Currency cannot be null");
         this.locale = Objects.requireNonNull(locale, "Locale cannot be null");
@@ -163,22 +158,6 @@ public class OrderRequest {
 
     public void setBuyer(Buyer buyer) {
         this.buyer = Objects.requireNonNull(buyer, "Buyer cannot be null");
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getCallbackUrl() {
-        return callbackUrl;
-    }
-
-    public void setCallbackUrl(String callbackUrl) {
-        this.callbackUrl = callbackUrl;
     }
 
     public String getConversationId() {
@@ -325,11 +304,11 @@ public class OrderRequest {
         this.externalReferenceId = externalReferenceId;
     }
 
-    public OrderCard getOrderCards() {
+    public List<OrderCard> getOrderCards() {
         return orderCards;
     }
 
-    public void setOrderCards(OrderCard orderCards) {
+    public void setOrderCards(List<OrderCard> orderCards) {
         this.orderCards = orderCards;
     }
 
@@ -421,15 +400,14 @@ public class OrderRequest {
         this.consents = consents;
     }
 
+
     @Override
     public String toString() {
-        return "OrderRequest{" +
+        return "OrderCreateRequest{" +
                 "amount=" + amount +
                 ", currency='" + currency + '\'' +
                 ", locale='" + locale + '\'' +
                 ", buyer=" + buyer +
-                ", description='" + description + '\'' +
-                ", callbackUrl='" + callbackUrl + '\'' +
                 ", conversationId='" + conversationId + '\'' +
                 ", metadata=" + metadata +
                 ", shippingAddress=" + shippingAddress +

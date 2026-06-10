@@ -21,9 +21,6 @@ public class Buyer {
     @JsonProperty("email")
     private String email;
 
-    @JsonProperty("phone")
-    private String phone;
-
     @JsonProperty("identity_number")
     private String identityNumber;
 
@@ -79,20 +76,19 @@ public class Buyer {
     }
 
     /**
-     * Constructor with all fields.
-     * 
+     * Constructor with required fields and optional identity number.
+     *
      * @param name           Buyer's first name (required)
      * @param surname        Buyer's last name (required)
      * @param email          Buyer's email address (required)
-     * @param phone          Buyer's phone number (optional)
      * @param identityNumber Buyer's identity number (optional)
      * @throws NullPointerException if any required parameter is null
+     * @see #setGsmNumber(String) to set buyer GSM number when needed
      */
-    public Buyer(String name, String surname, String email, String phone, String identityNumber) {
+    public Buyer(String name, String surname, String email, String identityNumber) {
         this.name = Objects.requireNonNull(name, "Buyer name cannot be null");
         this.surname = Objects.requireNonNull(surname, "Buyer surname cannot be null");
         this.email = Objects.requireNonNull(email, "Buyer email cannot be null");
-        this.phone = phone;
         this.identityNumber = identityNumber;
     }
 
@@ -119,14 +115,6 @@ public class Buyer {
 
     public void setEmail(String email) {
         this.email = Objects.requireNonNull(email, "Buyer email cannot be null");
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 
     public String getIdentityNumber() {
@@ -235,13 +223,12 @@ public class Buyer {
         return Objects.equals(name, buyer.name) &&
                 Objects.equals(surname, buyer.surname) &&
                 Objects.equals(email, buyer.email) &&
-                Objects.equals(phone, buyer.phone) &&
                 Objects.equals(identityNumber, buyer.identityNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, surname, email, phone, identityNumber);
+        return Objects.hash(name, surname, email, identityNumber);
     }
 
     @Override
@@ -250,7 +237,6 @@ public class Buyer {
                 "name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
                 ", identityNumber='" + identityNumber + '\'' +
                 '}';
     }

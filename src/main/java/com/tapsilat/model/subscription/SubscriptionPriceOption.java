@@ -4,8 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.math.BigDecimal;
 
 /**
- * Represents a price option for a subscription.
+ * @deprecated Use amount/cycle/period fields in SubscriptionCreateRequest.
  */
+@Deprecated
 public class SubscriptionPriceOption {
     @JsonProperty("count")
     private Integer count;
@@ -35,13 +36,5 @@ public class SubscriptionPriceOption {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
-    }
-
-    @Override
-    public String toString() {
-        return "SubscriptionPriceOption{" +
-                "count=" + count +
-                ", price=" + price +
-                '}';
     }
 }

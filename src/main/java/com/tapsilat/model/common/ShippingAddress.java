@@ -24,12 +24,19 @@ public class ShippingAddress {
     
     @JsonProperty("zip_code")
     private String zipCode;
-    
+
+    @JsonProperty("tracking_code")
+    private String trackingCode;
+
+    @JsonProperty("shipping_date")
+    private String shippingDate;
+
     // Default constructor for Jackson
-    public ShippingAddress() {}
-    
+    public ShippingAddress() {
+    }
+
     /**
-     * Constructor with all fields.
+     * Constructor with required fields.
      */
     public ShippingAddress(String address, String city, String contactName, String country, String zipCode) {
         this.address = address;
@@ -38,62 +45,82 @@ public class ShippingAddress {
         this.country = country;
         this.zipCode = zipCode;
     }
-    
+
     public String getAddress() {
         return address;
     }
-    
+
     public void setAddress(String address) {
         this.address = address;
     }
-    
+
     public String getCity() {
         return city;
     }
-    
+
     public void setCity(String city) {
         this.city = city;
     }
-    
+
     public String getContactName() {
         return contactName;
     }
-    
+
     public void setContactName(String contactName) {
         this.contactName = contactName;
     }
-    
+
     public String getCountry() {
         return country;
     }
-    
+
     public void setCountry(String country) {
         this.country = country;
     }
-    
+
     public String getZipCode() {
         return zipCode;
     }
-    
+
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
-    
+
+    public String getTrackingCode() {
+        return trackingCode;
+    }
+
+    public void setTrackingCode(String trackingCode) {
+        this.trackingCode = trackingCode;
+    }
+
+    public String getShippingDate() {
+        return shippingDate;
+    }
+
+    public void setShippingDate(String shippingDate) {
+        this.shippingDate = shippingDate;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         ShippingAddress that = (ShippingAddress) o;
         return Objects.equals(address, that.address) &&
                 Objects.equals(city, that.city) &&
                 Objects.equals(contactName, that.contactName) &&
                 Objects.equals(country, that.country) &&
-                Objects.equals(zipCode, that.zipCode);
+                Objects.equals(zipCode, that.zipCode) &&
+                Objects.equals(trackingCode, that.trackingCode) &&
+                Objects.equals(shippingDate, that.shippingDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(address, city, contactName, country, zipCode);
+        return Objects.hash(address, city, contactName, country, zipCode, trackingCode, shippingDate);
     }
 
     @Override
@@ -104,6 +131,8 @@ public class ShippingAddress {
                 ", contactName='" + contactName + '\'' +
                 ", country='" + country + '\'' +
                 ", zipCode='" + zipCode + '\'' +
+                ", trackingCode='" + trackingCode + '\'' +
+                ", shippingDate='" + shippingDate + '\'' +
                 '}';
     }
 }
