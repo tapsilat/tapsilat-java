@@ -209,8 +209,8 @@ public class IntegrationTest {
         }
 
         try {
-            Map<String, Object> response = client.orders().list(1, 10, null, null, null, null, null);
-            assertNotNull(response);
+            Map<String, Object> orderList = client.orders().list(1, 10, null, null, null, null, null, null);
+            assertNotNull(orderList);
         } catch (TapsilatException e) {
             fail("API Error: " + e.getMessage());
         }
@@ -355,6 +355,68 @@ public class IntegrationTest {
             client.orders().getPaymentDetails(dummyRef, null);
         } catch (TapsilatException ignored) {
         }
+    }
+
+    // ==================== Scenario 9: System Operations Smoke Test
+    // ====================
+
+    @Test
+    public void testScenario9_SystemOperationsSmoke() throws Exception {
+        if (token == null) {
+            skipTest("testScenario9_SystemOperationsSmoke");
+            return;
+        }
+
+        try {
+            assertNotNull(client.system().getOrderStatuses());
+            assertNotNull(client.system().getBasketItemTypes());
+            assertNotNull(client.system().getErrorCodes());
+            assertNotNull(client.system().getPaymentTermStatuses());
+            assertNotNull(client.system().getProductTypes());
+            assertNotNull(client.system().getShortcutTypes());
+            assertNotNull(client.system().getTransactionPaymentTypes());
+            assertNotNull(client.system().getTransactionPurposes());
+            assertNotNull(client.system().getTransactionStatuses());
+        } catch (TapsilatException ignored) {
+            // Endpoints might require specific auth or might not be fully available
+        }
+    }
+
+    // ==================== Scenario 10: New Order Operations Smoke Test
+    // ====================
+
+    @Test
+    public void testScenario10_NewOrderOperationsSmoke() throws Exception {
+        if (token == null) {
+            skipTest("testScenario10_NewOrderOperationsSmoke");
+            return;
+        }
+
+        String dummyRef = "dummy_ref_123";
+
+        try {
+            client.orders().getCheckoutUrl(dummyRef);
+        } catch (TapsilatException ignored) {}
+
+        try {
+            client.orders().getPaymentDetailsById(dummyRef);
+        } catch (TapsilatException ignored) {}
+
+        try {
+            client.orders().updatePaymentOptions(new OrderPaymentOptionsUpdateRequest(Arrays.asList("card"), dummyRef));
+        } catch (TapsilatException ignored) {}
+
+        try {
+            client.orders().splitOrderItemPayment(new SplitOrderItemPaymentRequest(10.0, dummyRef, "item_123"));
+        } catch (TapsilatException ignored) {}
+
+        try {
+            client.orders().vposQuery(dummyRef);
+        } catch (TapsilatException ignored) {}
+
+        try {
+            client.orders().callback(dummyRef);
+        } catch (TapsilatException ignored) {}
     }
 
     private void skipTest(String testName) {

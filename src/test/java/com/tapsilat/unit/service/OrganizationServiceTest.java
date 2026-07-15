@@ -185,7 +185,7 @@ class OrganizationServiceTest {
 
         ClassicHttpRequest captured = httpClient.getCapturedRequest();
         assertEquals("GET", captured.getMethod());
-        assertTrue(captured.getUri().toString().contains("/organization/meta/meta_name"));
+        assertTrue(captured.getUri().toString().contains("/organization/metas/meta_name"));
     }
 
     // ==================== getScopes ====================
@@ -275,5 +275,20 @@ class OrganizationServiceTest {
         ClassicHttpRequest captured = httpClient.getCapturedRequest();
         assertEquals("POST", captured.getMethod());
         assertTrue(captured.getUri().toString().contains("/organization/user/verify-mobile"));
+    }
+
+    @Test
+    void testCreateUserToken() throws Exception {
+        httpClient.setResponse(200, "{\"success\":true}");
+
+        com.tapsilat.model.organization.OrgUserTokenRequest req = new com.tapsilat.model.organization.OrgUserTokenRequest();
+        req.setEmail("test@test.com");
+
+        Map<String, Object> response = organizationService.createUserToken(req);
+        assertNotNull(response);
+
+        ClassicHttpRequest captured = httpClient.getCapturedRequest();
+        assertEquals("POST", captured.getMethod());
+        assertTrue(captured.getUri().toString().contains("/organization/user/token"));
     }
 }

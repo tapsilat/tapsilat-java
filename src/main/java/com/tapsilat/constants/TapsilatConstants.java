@@ -33,6 +33,10 @@ public final class TapsilatConstants {
     public static final String ENDPOINT_ORDER_TERMINATE = "/api/v1/order/terminate";
     public static final String ENDPOINT_ORDER_MANUAL_CALLBACK = "/api/v1/order/callback";
     public static final String ENDPOINT_ORDER_RELATED_UPDATE = "/api/v1/order/releated";
+    public static final String ENDPOINT_ORDER_PAYMENT_OPTIONS_UPDATE = "/api/v1/order/payment-options";
+    public static final String ENDPOINT_ORDER_SPLIT_ITEM_PAYMENT = "/api/v1/order/split";
+    public static final String ENDPOINT_ORDER_VPOS_QUERY = "/api/v1/orders/%s/vpos-query";
+    public static final String ENDPOINT_ORDER_CALLBACK = "/api/v1/orders/%s/callback";
     public static final String ENDPOINT_ORGANIZATION_SETTINGS = "/api/v1/organization/settings";
     public static final String ENDPOINT_ORGANIZATION_CALLBACK = "/api/v1/organization/callback";
     public static final String ENDPOINT_ORGANIZATION_BUSINESS_CREATE = "/api/v1/organization/business/create";
@@ -40,7 +44,7 @@ public final class TapsilatConstants {
     public static final String ENDPOINT_ORGANIZATION_LIMIT_USER = "/api/v1/organization/limit/user";
     public static final String ENDPOINT_ORGANIZATION_LIMITS = "/api/v1/organization/limits";
     public static final String ENDPOINT_ORGANIZATION_VPOS = "/api/v1/organization/list-vpos";
-    public static final String ENDPOINT_ORGANIZATION_META = "/api/v1/organization/meta";
+    public static final String ENDPOINT_ORGANIZATION_META = "/api/v1/organization/metas";
     public static final String ENDPOINT_ORGANIZATION_SCOPES = "/api/v1/organization/scopes";
     public static final String ENDPOINT_ORGANIZATION_SUBORGANIZATIONS = "/api/v1/organization/suborganizations";
     public static final String ENDPOINT_ORGANIZATION_USER_CREATE = "/api/v1/organization/user/create";
@@ -54,6 +58,17 @@ public final class TapsilatConstants {
     public static final String ENDPOINT_ORGANIZATION_CURRENCY_PRESETS = "/api/v1/organization/currency-presets";
     public static final String ENDPOINT_ORGANIZATION_SUBORGANIZATION_DETAILS = "/api/v1/organization/suborganizations/%s";
     public static final String ENDPOINT_ORGANIZATION_SUBORGANIZATION_SUBMERCHANTS = "/api/v1/organization/suborganizations/%s/submerchant";
+    
+    // System Endpoints
+    public static final String ENDPOINT_SYSTEM_BASKET_ITEM_TYPES = "/api/v1/system/basket-item-types";
+    public static final String ENDPOINT_SYSTEM_ERROR_CODES = "/api/v1/system/error-codes";
+    public static final String ENDPOINT_SYSTEM_PAYMENT_TERM_STATUSES = "/api/v1/system/payment-term-statuses";
+    public static final String ENDPOINT_SYSTEM_PRODUCT_TYPES = "/api/v1/system/product-types";
+    public static final String ENDPOINT_SYSTEM_SHORTCUT_TYPES = "/api/v1/system/shortcut-types";
+    public static final String ENDPOINT_SYSTEM_TRANSACTION_PAYMENT_TYPES = "/api/v1/system/transaction-payment-types";
+    public static final String ENDPOINT_SYSTEM_TRANSACTION_PURPOSES = "/api/v1/system/transaction-purposes";
+    public static final String ENDPOINT_SYSTEM_TRANSACTION_STATUSES = "/api/v1/system/transaction-statuses";
+    
     public static final String ENDPOINT_HEALTH = "/api/v1/health";
 
     // Default Configuration
