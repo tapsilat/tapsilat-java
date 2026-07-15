@@ -164,6 +164,67 @@ boolean isValid = TapsilatClient.verifyWebhook(
 );
 ```
 
+
+## 📚 API Reference
+
+### Core Operations (OrderService)
+
+| Method                  | Description          |
+| ----------------------- | -------------------- |
+| `create()`              | Create payment order |
+| `get()`                 | Get order details    |
+| `getStatus()`           | Check payment status |
+| `refund()`              | Process partial refund |
+| `refundAll()`           | Process full refund  |
+| `refundRequest()`       | Create refund request |
+| `cancel()`              | Cancel order         |
+| `getCheckoutUrl()`      | Get checkout URL     |
+| `getPayments()`         | Get order payments   |
+| `pdf()`                 | Export order as PDF  |
+| `excel()`               | Export order as Excel|
+| `addOip()`              | Add item payment     |
+| `terminate()`           | Terminate order      |
+
+### Payment Terms
+
+| Method                   | Description         |
+| ------------------------ | ------------------- |
+| `getTerm()`              | Get payment terms   |
+| `createTerm()`           | Create payment term |
+| `updateTerm()`           | Update term         |
+| `deleteTerm()`           | Delete term         |
+| `refundTerm()`           | Refund payment term |
+
+### OrganizationService
+
+| Method                          | Description         |
+| ------------------------------- | ------------------- |
+| `createBusiness()`              | Create business entity |
+| `createUser()`                  | Create organization user |
+| `createUserToken()`             | Create user token |
+| `getSuborganizations()`         | List sub-organizations |
+| `getSuborganizationDetails()`   | Get sub-org details |
+
+### SubmerchantService
+
+| Method                   | Description         |
+| ------------------------ | ------------------- |
+| `create()`               | Create submerchant  |
+| `get()`                  | Get submerchant details |
+| `update()`               | Update submerchant  |
+| `delete()`               | Delete submerchant  |
+| `list()`                 | List submerchants   |
+
+### SubscriptionService
+
+| Method                   | Description         |
+| ------------------------ | ------------------- |
+| `create()`               | Create subscription |
+| `get()`                  | Get subscription    |
+| `list()`                 | List subscriptions  |
+| `cancel()`               | Cancel subscription |
+
+
 ## Advanced Options
 
 ### Error Handling
