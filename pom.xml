@@ -144,6 +144,9 @@
             </goals>
           </execution>
         </executions>
+        <configuration>
+          <doclint>none</doclint>
+        </configuration>
       </plugin>
 
       <!-- GPG plugin -->
