@@ -117,7 +117,7 @@ public class OrderService extends BaseService {
 
     @SuppressWarnings("unchecked")
     public Map<String, Object> list(Integer page, Integer perPage, String startDate, String endDate,
-            String organizationId, String relatedReferenceId, String buyerId) throws TapsilatException {
+            String organizationId, String relatedReferenceId, String buyerId, Integer status) throws TapsilatException {
         try {
             Map<String, String> params = new HashMap<>();
             if (page != null)
@@ -134,6 +134,8 @@ public class OrderService extends BaseService {
                 params.put("related_reference_id", relatedReferenceId);
             if (buyerId != null)
                 params.put("buyer_id", buyerId);
+            if (status != null)
+                params.put("status", status.toString());
 
             return executeRequest(buildRequest("GET", TapsilatConstants.ENDPOINT_ORDER_LIST, null, params), Map.class);
         } catch (IOException | ParseException e) {
@@ -339,6 +341,109 @@ public class OrderService extends BaseService {
                     Map.class);
         } catch (IOException | ParseException e) {
             throw new TapsilatException("Failed to get organization settings", e);
+        }
+    }
+
+    public String getCheckoutUrl(String referenceId) throws TapsilatException {
+        OrderResponse response = get(referenceId);
+        if (response != null) {
+            return response.getCheckoutUrl();
+        }
+        return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> getPaymentDetailsById(String referenceId) throws TapsilatException {
+        try {
+            return executeRequest(buildRequest("GET", "/api/v1/order/" + referenceId + "/payment-details", null, null),
+                    Map.class);
+        } catch (IOException | ParseException e) {
+            throw new TapsilatException("Failed to get payment details by id", e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> updatePaymentOptions(OrderPaymentOptionsUpdateRequest request) throws TapsilatException {
+        try {
+            return executeRequest(buildRequest("PATCH", TapsilatConstants.ENDPOINT_ORDER_PAYMENT_OPTIONS_UPDATE, request, null),
+                    Map.class);
+        } catch (IOException | ParseException e) {
+            throw new TapsilatException("Failed to update payment options", e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> splitOrderItemPayment(SplitOrderItemPaymentRequest request) throws TapsilatException {
+        try {
+            return executeRequest(buildRequest("POST", TapsilatConstants.ENDPOINT_ORDER_SPLIT_ITEM_PAYMENT, request, null),
+                    Map.class);
+        } catch (IOException | ParseException e) {
+            throw new TapsilatException("Failed to split order item payment", e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> vposQuery(String id) throws TapsilatException {
+        try {
+            String endpoint = String.format(TapsilatConstants.ENDPOINT_ORDER_VPOS_QUERY, id);
+            return executeRequest(buildRequest("GET", endpoint, null, null), Map.class);
+        } catch (IOException | ParseException e) {
+            throw new TapsilatException("Failed to query vpos", e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> callback(String id) throws TapsilatException {
+        try {
+            String endpoint = String.format(TapsilatConstants.ENDPOINT_ORDER_CALLBACK, id);
+            return executeRequest(buildRequest("GET", endpoint, null, null), Map.class);
+        } catch (IOException | ParseException e) {
+            throw new TapsilatException("Failed to get callback", e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> getPayments(String orderId) throws TapsilatException {
+        try {
+            return executeRequest(buildRequest("GET", "/order/" + orderId + "/payments", null, null), Map.class);
+        } catch (IOException | ParseException e) {
+            throw new TapsilatException("Failed to get order payments", e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> pdf(String referenceId) throws TapsilatException {
+        try {
+            return executeRequest(buildRequest("GET", "/order/" + referenceId + "/pdf", null, null), Map.class);
+        } catch (IOException | ParseException e) {
+            throw new TapsilatException("Failed to get order pdf", e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> excel(String referenceId) throws TapsilatException {
+        try {
+            return executeRequest(buildRequest("GET", "/order/" + referenceId + "/excel", null, null), Map.class);
+        } catch (IOException | ParseException e) {
+            throw new TapsilatException("Failed to get order excel", e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> refundRequest(com.tapsilat.model.order.RefundRequestModel request) throws TapsilatException {
+        try {
+            return executeRequest(buildRequest("POST", "/order/refund-request", request, null), Map.class);
+        } catch (IOException | ParseException e) {
+            throw new TapsilatException("Failed to create refund request", e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> addOip(com.tapsilat.model.order.AddOrderOipRequest request) throws TapsilatException {
+        try {
+            return executeRequest(buildRequest("POST", "/order/oip", request, null), Map.class);
+        } catch (IOException | ParseException e) {
+            throw new TapsilatException("Failed to add order OIP", e);
         }
     }
 }

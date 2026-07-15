@@ -23,6 +23,21 @@ public class BasketItemPayer {
     @JsonProperty("vat")
     private String vat;
 
+    @JsonProperty("name")
+    private String name;
+
+    @JsonProperty("surname")
+    private String surname;
+
+    @JsonProperty("identity_number")
+    private String identityNumber;
+
+    @JsonProperty("email")
+    private String email;
+
+    @JsonProperty("phone")
+    private String phone;
+
     public String getAddress() {
         return address;
     }
@@ -69,5 +84,45 @@ public class BasketItemPayer {
 
     public void setVat(String vat) {
         this.vat = vat;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getIdentityNumber() {
+        return identityNumber;
+    }
+
+    public void setIdentityNumber(String identityNumber) {
+        this.identityNumber = identityNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

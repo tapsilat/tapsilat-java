@@ -178,4 +178,13 @@ public class OrganizationService extends BaseService {
             throw new TapsilatException("Failed to get organization suborganization submerchants", e);
         }
     }
+
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> createUserToken(com.tapsilat.model.organization.OrgUserTokenRequest request) throws TapsilatException {
+        try {
+            return executeRequest(buildRequest("POST", "/organization/user/token", request, null), Map.class);
+        } catch (IOException | ParseException e) {
+            throw new TapsilatException("Failed to create user token", e);
+        }
+    }
 }

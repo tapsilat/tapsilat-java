@@ -57,6 +57,15 @@ public class Buyer {
     @JsonProperty("zip_code")
     private String zipCode;
 
+    @JsonProperty("income_type")
+    private String incomeType;
+
+    @JsonProperty("education")
+    private String education;
+
+    @JsonProperty("occupation")
+    private String occupation;
+
     // Default constructor for Jackson deserialization
     public Buyer() {
     }
@@ -211,6 +220,30 @@ public class Buyer {
 
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
+    }
+
+    public String getIncomeType() {
+        return incomeType;
+    }
+
+    public void setIncomeType(String incomeType) {
+        this.incomeType = incomeType;
+    }
+
+    public String getEducation() {
+        return education;
+    }
+
+    public void setEducation(String education) {
+        this.education = education;
+    }
+
+    public String getOccupation() {
+        return occupation;
+    }
+
+    public void setOccupation(String occupation) {
+        this.occupation = occupation;
     }
 
     @Override

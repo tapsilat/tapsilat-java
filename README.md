@@ -135,6 +135,23 @@ client.orders().createTerm(term);
 
 ---
 
+## System Operations
+
+You can retrieve global system enumerations using the `SystemService`:
+
+```java
+// Get available error codes
+Map<String, Object> errorCodes = client.system().getErrorCodes();
+
+// Get order statuses
+Map<String, Object> orderStatuses = client.system().getOrderStatuses();
+
+// Get transaction payment types
+Map<String, Object> paymentTypes = client.system().getTransactionPaymentTypes();
+```
+
+---
+
 ## Webhook Verification
 
 Tapsilat sends signed webhooks. You can verify them securely:

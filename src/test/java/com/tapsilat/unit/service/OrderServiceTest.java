@@ -156,7 +156,7 @@ class OrderServiceTest {
         String jsonResponse = "{\"page\":1, \"per_page\":3, \"rows\":[{},{},{}], \"total\":24, \"total_page\":8}";
         httpClient.setResponse(200, jsonResponse);
 
-        Map<String, Object> response = orderService.list(1, 3, null, null, null, null, null);
+        Map<String, Object> response = orderService.list(1, 3, null, null, null, null, null, null);
 
         assertNotNull(response);
         assertEquals(1, ((Number) response.get("page")).intValue());
@@ -689,5 +689,73 @@ class OrderServiceTest {
         ClassicHttpRequest captured = httpClient.getCapturedRequest();
         assertEquals("GET", captured.getMethod());
         assertTrue(captured.getUri().toString().contains("/organization/settings"));
+    }
+
+    // ==================== new methods ====================
+
+    @Test
+    void testGetPayments() throws Exception {
+        httpClient.setResponse(200, "{\"success\":true}");
+
+        Map<String, Object> response = orderService.getPayments("order123");
+        assertNotNull(response);
+
+        ClassicHttpRequest captured = httpClient.getCapturedRequest();
+        assertEquals("GET", captured.getMethod());
+        assertTrue(captured.getUri().toString().contains("/order/order123/payments"));
+    }
+
+    @Test
+    void testPdf() throws Exception {
+        httpClient.setResponse(200, "{\"success\":true}");
+
+        Map<String, Object> response = orderService.pdf("ref123");
+        assertNotNull(response);
+
+        ClassicHttpRequest captured = httpClient.getCapturedRequest();
+        assertEquals("GET", captured.getMethod());
+        assertTrue(captured.getUri().toString().contains("/order/ref123/pdf"));
+    }
+
+    @Test
+    void testExcel() throws Exception {
+        httpClient.setResponse(200, "{\"success\":true}");
+
+        Map<String, Object> response = orderService.excel("ref123");
+        assertNotNull(response);
+
+        ClassicHttpRequest captured = httpClient.getCapturedRequest();
+        assertEquals("GET", captured.getMethod());
+        assertTrue(captured.getUri().toString().contains("/order/ref123/excel"));
+    }
+
+    @Test
+    void testRefundRequest() throws Exception {
+        httpClient.setResponse(200, "{\"success\":true}");
+
+        com.tapsilat.model.order.RefundRequestModel req = new com.tapsilat.model.order.RefundRequestModel();
+        req.setOrderId("order123");
+
+        Map<String, Object> response = orderService.refundRequest(req);
+        assertNotNull(response);
+
+        ClassicHttpRequest captured = httpClient.getCapturedRequest();
+        assertEquals("POST", captured.getMethod());
+        assertTrue(captured.getUri().toString().contains("/order/refund-request"));
+    }
+
+    @Test
+    void testAddOip() throws Exception {
+        httpClient.setResponse(200, "{\"success\":true}");
+
+        com.tapsilat.model.order.AddOrderOipRequest req = new com.tapsilat.model.order.AddOrderOipRequest();
+        req.setOrderId("order123");
+
+        Map<String, Object> response = orderService.addOip(req);
+        assertNotNull(response);
+
+        ClassicHttpRequest captured = httpClient.getCapturedRequest();
+        assertEquals("POST", captured.getMethod());
+        assertTrue(captured.getUri().toString().contains("/order/oip"));
     }
 }

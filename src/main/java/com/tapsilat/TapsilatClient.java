@@ -5,7 +5,9 @@ import com.tapsilat.config.TapsilatConfig;
 import com.tapsilat.exception.TapsilatException;
 import com.tapsilat.service.OrderService;
 import com.tapsilat.service.OrganizationService;
+import com.tapsilat.service.SubmerchantService;
 import com.tapsilat.service.SubscriptionService;
+import com.tapsilat.service.SystemService;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.slf4j.Logger;
@@ -27,6 +29,8 @@ public class TapsilatClient implements AutoCloseable {
     private final OrderService orders;
     private final SubscriptionService subscriptions;
     private final OrganizationService organization;
+    private final SystemService system;
+    private final SubmerchantService submerchants;
 
     public TapsilatClient(TapsilatConfig config) {
         Objects.requireNonNull(config, "TapsilatConfig cannot be null");
@@ -38,6 +42,8 @@ public class TapsilatClient implements AutoCloseable {
         this.orders = new OrderService(httpClient, config, objectMapper);
         this.subscriptions = new SubscriptionService(httpClient, config, objectMapper);
         this.organization = new OrganizationService(httpClient, config, objectMapper);
+        this.system = new SystemService(httpClient, config, objectMapper);
+        this.submerchants = new SubmerchantService(httpClient, config, objectMapper);
     }
 
     /**
@@ -53,6 +59,14 @@ public class TapsilatClient implements AutoCloseable {
 
     public OrganizationService organization() {
         return organization;
+    }
+    
+    public SystemService system() {
+        return system;
+    }
+
+    public SubmerchantService submerchants() {
+        return submerchants;
     }
 
     /**
