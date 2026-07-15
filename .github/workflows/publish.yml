@@ -34,7 +34,7 @@ jobs:
         run: mvn -B test
 
       - name: Publish package
-        run: mvn -B deploy -DskipTests
+        run: mvn -B deploy -DskipTests -Dgpg.passphrase=${{ env.MAVEN_GPG_PASSPHRASE }}
 
       - name: Extract version from tag
         id: get_version
