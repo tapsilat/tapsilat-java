@@ -3,6 +3,7 @@ package com.tapsilat;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tapsilat.config.TapsilatConfig;
 import com.tapsilat.exception.TapsilatException;
+import com.tapsilat.service.ElementsService;
 import com.tapsilat.service.OrderService;
 import com.tapsilat.service.OrganizationService;
 import com.tapsilat.service.SubmerchantService;
@@ -31,6 +32,7 @@ public class TapsilatClient implements AutoCloseable {
     private final OrganizationService organization;
     private final SystemService system;
     private final SubmerchantService submerchants;
+    private final ElementsService elements;
 
     public TapsilatClient(TapsilatConfig config) {
         Objects.requireNonNull(config, "TapsilatConfig cannot be null");
@@ -44,6 +46,7 @@ public class TapsilatClient implements AutoCloseable {
         this.organization = new OrganizationService(httpClient, config, objectMapper);
         this.system = new SystemService(httpClient, config, objectMapper);
         this.submerchants = new SubmerchantService(httpClient, config, objectMapper);
+        this.elements = new ElementsService(httpClient, config, objectMapper);
     }
 
     /**
@@ -67,6 +70,13 @@ public class TapsilatClient implements AutoCloseable {
 
     public SubmerchantService submerchants() {
         return submerchants;
+    }
+
+    /**
+     * Access Tapsilat Elements session operations (native card sheet).
+     */
+    public ElementsService elements() {
+        return elements;
     }
 
     /**
