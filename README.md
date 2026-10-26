@@ -152,6 +152,38 @@ Map<String, Object> paymentTypes = client.system().getTransactionPaymentTypes();
 
 ---
 
+## Tapsilat Elements Sessions
+
+Tapsilat Elements is the native Android and iOS card sheet. Your backend creates a session with its secret API key and passes only the session's `client_secret` to the app, which opens the sheet with it. Card data goes from the sheet to Tapsilat encrypted and never reaches your backend.
+
+```java
+import com.tapsilat.constants.ElementsConstants;
+import com.tapsilat.model.elements.ElementsSession;
+import com.tapsilat.model.elements.ElementsSessionCreateRequest;
+import com.tapsilat.model.elements.ElementsSessionWithSecret;
+
+ElementsSessionCreateRequest request = new ElementsSessionCreateRequest(ElementsConstants.PURPOSE_PAY);
+request.setOrderReferenceId(order.getReferenceId());
+request.setSaveCard(true);
+
+ElementsSessionWithSecret session = client.elements().createSession(request);
+// Return session.getId() and session.getClientSecret() to your app. Do not log or store the secret.
+
+// Later, read the outcome on your backend instead of trusting the app:
+ElementsSession outcome = client.elements().getSession(session.getId());
+if (ElementsConstants.STATUS_SUCCEEDED.equals(outcome.getStatus())) {
+    // fulfil the order; outcome.getCard() holds brand, last4 and expiry
+}
+```
+
+A `pay` session needs `orderReferenceId`. A `tokenize` session saves a card for `userId`, with `mode` set to `ElementsConstants.MODE_SECURE` (3D Secure), `MODE_HALF_SECURE` or `MODE_NON_SECURE`. `client.elements().cancelSession(id)` cancels a session that is still waiting for a card; a session that is confirming or has completed comes back unchanged.
+
+The client secret is returned only by `createSession`. `ElementsSessionWithSecret.toString()` prints it as `[redacted]`, and JSON serialization keeps it, so you can still send it to the app. Status, purpose and card brand are plain strings, so values added to the API later still decode; `ElementsConstants` lists the known ones.
+
+Elements errors carry a stable code (for example `elements_not_enabled`, `session_not_found`) and a retryable flag, read with `ApiException.getErrorCode()` and `isRetryable()` (see [Error Handling](#error-handling)).
+
+---
+
 ## Webhook Verification
 
 Tapsilat sends signed webhooks. You can verify them securely:
@@ -224,6 +256,14 @@ boolean isValid = TapsilatClient.verifyWebhook(
 | `list()`                 | List subscriptions  |
 | `cancel()`               | Cancel subscription |
 
+### ElementsService
+
+| Method                   | Description         |
+| ------------------------ | ------------------- |
+| `createSession()`        | Create an Elements session: `POST /api/v1/elements/sessions` |
+| `getSession()`           | Get a session's outcome: `GET /api/v1/elements/sessions/{id}` |
+| `cancelSession()`        | Cancel a session: `POST /api/v1/elements/sessions/{id}/cancel` |
+
 
 ## Advanced Options
 
@@ -234,6 +274,28 @@ try {
     client.orders().create(request);
 } catch (TapsilatException e) {
     System.err.println("API Error: " + e.getMessage());
+}
+```
+
+An error response from the API is thrown as `ApiException` (HTTP 401 and 403 as its subclass `AuthenticationException`), with:
+
+- `getStatusCode()`: HTTP status code
+- `getErrorCode()`: API error code, when the body has one
+- `getErrorMessage()`: API error message, when the body has one
+- `isRetryable()`: true when the error object says the request can be retried
+- `getResponseBody()`: original response body
+
+Elements routes nest the error as `{"error": {"code": "...", "message": "...", "retryable": true}}`; the code, message and retryable flag are read from that object.
+
+```java
+try {
+    client.elements().getSession(sessionId);
+} catch (ApiException e) {
+    if ("session_not_found".equals(e.getErrorCode())) {
+        // unknown session
+    } else if (e.isRetryable()) {
+        // try again later
+    }
 }
 ```
 

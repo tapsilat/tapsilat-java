@@ -1,5 +1,6 @@
 package com.tapsilat.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tapsilat.config.TapsilatConfig;
 import com.tapsilat.constants.TapsilatConstants;
@@ -43,12 +44,8 @@ public abstract class BaseService {
             int statusCode = response.getCode();
             logger.debug("Response status: {}", statusCode);
 
-            if (statusCode == TapsilatConstants.HTTP_UNAUTHORIZED || statusCode == TapsilatConstants.HTTP_FORBIDDEN) {
-                throw new AuthenticationException("Authentication failed: " + responseBody, statusCode);
-            }
-
             if (statusCode >= 400) {
-                throw new ApiException("API request failed: " + responseBody, statusCode, null, responseBody);
+                throw errorResponse(statusCode, responseBody);
             }
 
             if (responseBody.isEmpty() || responseType == null)
@@ -58,6 +55,61 @@ public abstract class BaseService {
 
             return objectMapper.readValue(responseBody, responseType);
         }
+    }
+
+    /**
+     * Builds the exception for an error response: {@link AuthenticationException} for 401 and 403,
+     * {@link ApiException} otherwise. When the body nests the error as
+     * {@code {"error": {"code", "message", "retryable"}}}, as the Elements routes do, those fields are
+     * set on the exception and used for its message; other bodies are kept in the message as they are.
+     */
+    private ApiException errorResponse(int statusCode, String responseBody) {
+        boolean authFailure = statusCode == TapsilatConstants.HTTP_UNAUTHORIZED
+                || statusCode == TapsilatConstants.HTTP_FORBIDDEN;
+        String prefix = authFailure ? "Authentication failed: " : "API request failed: ";
+
+        String errorCode = null;
+        String errorMessage = null;
+        boolean retryable = false;
+        String description = responseBody;
+
+        JsonNode error = nestedError(responseBody);
+        if (error != null) {
+            errorCode = scalarText(error.get("code"));
+            errorMessage = scalarText(error.get("message"));
+            JsonNode retryableNode = error.get("retryable");
+            retryable = retryableNode != null && retryableNode.isBoolean() && retryableNode.booleanValue();
+            if (errorCode != null && errorMessage != null) {
+                description = "[" + errorCode + "] " + errorMessage;
+            } else if (errorCode != null) {
+                description = "[" + errorCode + "]";
+            } else if (errorMessage != null) {
+                description = errorMessage;
+            }
+        }
+
+        if (authFailure) {
+            return new AuthenticationException(prefix + description, statusCode, errorCode, errorMessage, retryable,
+                    responseBody);
+        }
+        return new ApiException(prefix + description, statusCode, errorCode, errorMessage, retryable, responseBody);
+    }
+
+    private JsonNode nestedError(String responseBody) {
+        if (responseBody == null || responseBody.isEmpty()) {
+            return null;
+        }
+        try {
+            JsonNode root = objectMapper.readTree(responseBody);
+            JsonNode error = root != null ? root.get("error") : null;
+            return error != null && error.isObject() ? error : null;
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    private static String scalarText(JsonNode node) {
+        return node != null && node.isValueNode() && !node.isNull() ? node.asText() : null;
     }
 
     protected HttpUriRequestBase buildRequest(String method, String endpoint, Object payload,

@@ -69,6 +69,11 @@ public final class TapsilatConstants {
     public static final String ENDPOINT_SYSTEM_TRANSACTION_PURPOSES = "/api/v1/system/transaction-purposes";
     public static final String ENDPOINT_SYSTEM_TRANSACTION_STATUSES = "/api/v1/system/transaction-statuses";
     
+    // Elements Endpoints
+    public static final String ENDPOINT_ELEMENTS_SESSIONS = "/api/v1/elements/sessions";
+    public static final String ENDPOINT_ELEMENTS_SESSION = "/api/v1/elements/sessions/%s";
+    public static final String ENDPOINT_ELEMENTS_SESSION_CANCEL = "/api/v1/elements/sessions/%s/cancel";
+
     public static final String ENDPOINT_HEALTH = "/api/v1/health";
 
     // Default Configuration
